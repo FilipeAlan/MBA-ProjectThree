@@ -14,12 +14,12 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Setup do .NET 9 (preview)
+      - name: Setup do .NET 9
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.100-preview.3
+          dotnet-version: 9.0.x
 
-      - name: Verificar SDKs disponíveis (debug)
+      - name: Verificar SDKs instalados
         run: dotnet --list-sdks
 
       - name: Restaurar dependências
