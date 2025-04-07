@@ -1,0 +1,30 @@
+name: Build & Test .NET com Warnings como Erro
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup do .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x # ou 9.0.x se já estiver disponível
+
+      - name: Restaurar dependências
+        run: dotnet restore src/EducPlatform.sln
+
+      - name: Compilar sem warnings
+        run: dotnet build src/EducPlatform.sln --no-restore -warnaserror
+
+      - name: Executar testes
+        run: dotnet test src/EducPlatform.sln --no-build --verbosity normal --environment=Development
