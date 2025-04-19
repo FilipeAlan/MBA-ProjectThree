@@ -22,6 +22,7 @@ public class CadastrarCursoIntegrationTests
 
         // Act
         var resultado = await handler.Handle(comando);
+        await unitOfWork.Commit();
 
         // Assert
         Assert.True(resultado.Sucesso);
