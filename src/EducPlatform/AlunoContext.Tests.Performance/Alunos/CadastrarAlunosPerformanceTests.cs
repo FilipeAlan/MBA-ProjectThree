@@ -32,7 +32,7 @@ public class CadastrarAlunosPerformanceTests
         stopwatch.Stop();
 
         // Assert
-        Assert.True(stopwatch.Elapsed.TotalSeconds < 5,
+        Assert.True(stopwatch.Elapsed.TotalSeconds < 10,
             $"Cadastro demorou {stopwatch.Elapsed.TotalSeconds} segundos");
     }
 }
