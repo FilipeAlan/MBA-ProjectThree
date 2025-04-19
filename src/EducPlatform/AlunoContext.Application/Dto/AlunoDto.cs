@@ -1,2 +1,2 @@
-﻿namespace AlunoContext.Application.Queries.ListarAlunos;
+﻿namespace AlunoContext.Application.Dto;
 public record AlunoDto(Guid Id, string Nome, string Email);

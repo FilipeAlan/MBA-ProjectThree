@@ -1,6 +1,6 @@
-﻿using AlunoContext.Application.Common;
+﻿using AlunoContext.Domain.Common;
 
-namespace AlunoContext.Testes.Shared.Fakes;
+namespace AlunoContext.Tests.Shared.Fakes;
 public class UsuarioContextoFake : IUsuarioContexto
 {
     public string ObterUsuario() => "AlunoTeste";

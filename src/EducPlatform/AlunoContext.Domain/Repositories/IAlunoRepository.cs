@@ -4,8 +4,9 @@ namespace AlunoContext.Domain.Repositories;
 
 public interface IAlunoRepository
 {
-    void Adicionar(Aluno aluno);
-    void Excluir(Aluno aluno);
-    List<Aluno> Listar();
-    Aluno ObterPorId(Guid id);
+    Task Adicionar(Aluno aluno);
+    Task Excluir(Aluno aluno);
+    Task Atualizar(Aluno aluno);
+    Task<List<Aluno>> Listar();
+    Task<Aluno> ObterPorId(Guid id);
 }

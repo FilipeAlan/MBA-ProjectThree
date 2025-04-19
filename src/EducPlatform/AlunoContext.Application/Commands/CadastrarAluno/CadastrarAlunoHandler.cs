@@ -1,8 +1,9 @@
-﻿using AlunoContext.Application.Commands.CadastrarAluno;
-using AlunoContext.Application.Common;
-using AlunoContext.Domain.Aggregates;
+﻿using AlunoContext.Domain.Aggregates;
+using AlunoContext.Domain.Common;
 using AlunoContext.Domain.Repositories;
 using BuildingBlocks.Results;
+
+namespace AlunoContext.Application.Commands.CadastrarAluno;
 
 public class CadastrarAlunoHandler
 {
@@ -15,7 +16,7 @@ public class CadastrarAlunoHandler
         _usuarioContexto = usuarioContexto;
     }
 
-    public Result Handle(CadastrarAlunoComando comando)
+    public async Task<Result> Handle(CadastrarAlunoComando comando)
     {
         if (string.IsNullOrWhiteSpace(comando.Nome))
             return Result.Fail("O nome do aluno é obrigatório.");
@@ -24,7 +25,8 @@ public class CadastrarAlunoHandler
             return Result.Fail("O e-mail informado é inválido.");
 
         var aluno = new Aluno(comando.Nome, comando.Email, _usuarioContexto.ObterUsuario());
-        _repositorio.Adicionar(aluno);
+        
+        await _repositorio.Adicionar(aluno);
 
         return Result.Ok("Aluno cadastrado com sucesso.");
     }

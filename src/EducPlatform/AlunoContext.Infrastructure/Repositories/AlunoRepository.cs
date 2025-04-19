@@ -1,6 +1,7 @@
 ﻿using AlunoContext.Domain.Aggregates;
 using AlunoContext.Domain.Repositories;
 using AlunoContext.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlunoContext.Infrastructure.Repositories;
 
@@ -12,23 +13,34 @@ public class AlunoRepository : IAlunoRepository
     {
         _context = context;
     }
-
-    public void Adicionar(Aluno aluno)
+    public async Task Adicionar(Aluno aluno)
     {
-        _context.Alunos.Add(aluno);
-        _context.SaveChanges();
+       await _context.Alunos.AddAsync(aluno);
+       await _context.SaveChangesAsync();
     }
-    public void Excluir(Aluno aluno)
+    public async Task Atualizar(Aluno aluno)
+    {
+        // Se aluno foi recuperado pelo contexto, isso pode ser omitido:
+        _context.Alunos.Update(aluno);
+       await _context.SaveChangesAsync(); // aplica alterações no banco
+    }
+    public async Task Excluir(Aluno aluno)
     {
         _context.Alunos.Remove(aluno);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
-    public Aluno? ObterPorId(Guid id)
+    public async Task<Aluno?> ObterPorId(Guid id)
     {
-        return _context.Alunos.FirstOrDefault(x => x.Id == id);
+        return await _context.Alunos
+            .Include(a => a.Matriculas)
+            .Include(a => a.Certificados)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
-    public List<Aluno> Listar()
+    public async Task<List<Aluno>> Listar()
     {
-        return _context.Alunos.ToList();
+        return await _context.Alunos
+            .Include(a => a.Matriculas)
+            .Include(a => a.Certificados)
+            .ToListAsync();
     }
 }

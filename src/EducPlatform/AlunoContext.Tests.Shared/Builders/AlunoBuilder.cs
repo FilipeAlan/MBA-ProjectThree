@@ -1,6 +1,6 @@
 ﻿using AlunoContext.Domain.Aggregates;
 
-namespace AlunoContext.Testes.Shared.Builders;
+namespace AlunoContext.Tests.Shared.Builders;
 
 public class AlunoBuilder
 {

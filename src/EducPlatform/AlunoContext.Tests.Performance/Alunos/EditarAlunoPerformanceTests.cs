@@ -1,15 +1,16 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Testes.Shared.Fakes;
+using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
 using System.Diagnostics;
+using AlunoContext.Application.Commands.EditarAluno;
 
-namespace AlunoContext.Tests.Performance.Aluno;
+namespace AlunoContext.Tests.Performance.Alunos;
 
 public class EditarAlunoPerformanceTests
 {
     [Fact(DisplayName = "Deve editar 1000 alunos em menos de 3 segundos")]
-    public void DeveEditarVariosAlunosRapidamente()
+    public async Task DeveEditarVariosAlunosRapidamente()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -22,7 +23,7 @@ public class EditarAlunoPerformanceTests
         for (int i = 0; i < 1000; i++)
         {
             var comandoCadastro = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
-            cadastrarHandler.Handle(comandoCadastro);
+            await cadastrarHandler.Handle(comandoCadastro);
         }
 
         var alunos = contexto.Alunos.ToList();
@@ -40,7 +41,7 @@ public class EditarAlunoPerformanceTests
                 aluno.Email.Replace("@", ".editado@")
             );
 
-            editarHandler.Handle(comandoEdicao);
+           await editarHandler.Handle(comandoEdicao);
         }
 
         stopwatch.Stop();

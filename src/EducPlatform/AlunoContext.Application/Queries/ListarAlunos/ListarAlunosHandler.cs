@@ -1,4 +1,4 @@
-﻿using AlunoContext.Application.Queries.ListarAlunos;
+﻿using AlunoContext.Application.Dto;
 using AlunoContext.Domain.Repositories;
 
 namespace AlunoContext.Application.Queries.ListarAlunos;
@@ -12,9 +12,9 @@ public class ListarAlunosHandler
         _repositorio = repositorio;
     }
 
-    public List<AlunoDto> Handle(ListarAlunosQuery query)
+    public async Task<List<AlunoDto>> Handle(ListarAlunosQuery query)
     {
-        var alunos = _repositorio.Listar();
+        var alunos = await _repositorio.Listar();
         return alunos.Select(aluno => new AlunoDto(aluno.Id, aluno.Nome, aluno.Email)).ToList();
     }
 }

@@ -13,7 +13,7 @@ public class ConteudoProgramatico
         Objetivos = objetivos;
     }
 
-    public ConteudoProgramatico Atualizar(string novaDescricao, string novosObjetivos)
+    public static ConteudoProgramatico Atualizar(string novaDescricao, string novosObjetivos)
     {
         return new ConteudoProgramatico(novaDescricao, novosObjetivos);
     }

@@ -1,14 +1,15 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Testes.Shared.Fakes;
+using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
+using AlunoContext.Application.Commands.EditarAluno;
 
-namespace AlunoContext.Tests.Integration.Aluno
-{
+namespace AlunoContext.Tests.Integration.Alunos;
+
     public class EditarAlunoIntegrationTests
     {
         [Fact(DisplayName = "Deve editar o nome e email do aluno no banco de dados")]
-        public void DeveEditarAluno_ComSucesso()
+        public async Task DeveEditarAluno_ComSucesso()
         {
             // Arrange
             using var contexto = TestDbContextFactory.CriarContexto();
@@ -17,14 +18,14 @@ namespace AlunoContext.Tests.Integration.Aluno
 
             var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario);
             var comandoCadastro = new CadastrarAlunoComando("Filipe", "filipe@email.com");
-            cadastrarHandler.Handle(comandoCadastro);
+            await cadastrarHandler.Handle(comandoCadastro);
             var aluno = contexto.Alunos.First();
 
             var editarHandler = new EditarAlunoHandler(repositorio, usuario);
             var comandoEdicao = new EditarAlunoComando(aluno.Id, "Novo Nome", "novo@email.com");
 
             // Act
-            var resultado = editarHandler.Handle(comandoEdicao);
+            var resultado = await editarHandler.Handle(comandoEdicao);
             var alunoEditado = contexto.Alunos.First();
 
             // Assert
@@ -33,4 +34,4 @@ namespace AlunoContext.Tests.Integration.Aluno
             Assert.Equal("novo@email.com", alunoEditado.Email);
         }
     }
-}
+
