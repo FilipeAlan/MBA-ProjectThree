@@ -1,26 +1,28 @@
-﻿using AlunoContext.Application.Commands.MatricularAluno;
-using AlunoContext.Domain.Entities;
+﻿using AlunoContext.Domain.Entities;
 using AlunoContext.Domain.Repositories;
-using AlunoContext.Domain.Common;
 using BuildingBlocks.Results;
 using AlunoContext.Application.Common;
+using BuildingBlocks.Common;
 
-namespace AlunoContext.Application.Handlers;
+namespace AlunoContext.Application.Commands.MatricularAluno;
 
 public class MatricularAlunoHandler
 {
     private readonly IAlunoRepository _alunoRepository;
     private readonly IUsuarioContexto _usuarioContexto;
     private readonly ICursoConsulta _cursoConsulta;
+    private readonly IUnitOfWork _unitOfWork;
 
     public MatricularAlunoHandler(
         IAlunoRepository alunoRepository,
         IUsuarioContexto usuarioContexto,
-        ICursoConsulta cursoConsulta)
+        ICursoConsulta cursoConsulta,
+        IUnitOfWork unitOfWork)
     {
         _alunoRepository = alunoRepository;
         _usuarioContexto = usuarioContexto;
         _cursoConsulta = cursoConsulta;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -41,7 +43,7 @@ public class MatricularAlunoHandler
         aluno.AdicionarMatricula(matricula);
 
         await _alunoRepository.Atualizar(aluno);
-
+        await _unitOfWork.Commit();
         return Result.Ok("Aluno matriculado com sucesso.");
     }
 }

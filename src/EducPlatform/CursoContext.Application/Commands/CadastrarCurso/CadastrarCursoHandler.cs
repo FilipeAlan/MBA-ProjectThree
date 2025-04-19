@@ -1,21 +1,28 @@
 ﻿using CursoContext.Domain.Aggregates;
 using CursoContext.Domain.Repositories;
-using CursoContext.Application.Commands.CadastrarCurso;
 using CursoContext.Domain.ValueObjects;
+using BuildingBlocks.Common;
 using BuildingBlocks.Results;
 
-namespace CursoContext.Application.Handlers;
+namespace CursoContext.Application.Commands.CadastrarCurso;
 
 public class CadastrarCursoHandler
 {
     private readonly ICursoRepository _repositorio;
+    private readonly IUsuarioContexto _usuarioContexto;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CadastrarCursoHandler(ICursoRepository repositorio)
+    public CadastrarCursoHandler(
+        ICursoRepository repositorio,
+        IUsuarioContexto usuarioContexto,
+        IUnitOfWork unitOfWork)
     {
         _repositorio = repositorio;
+        _usuarioContexto = usuarioContexto;
+        _unitOfWork = unitOfWork;
     }
 
-    public Result Handle(CadastrarCursoComando comando)
+    public async Task<Result> Handle(CadastrarCursoComando comando)
     {
         if (string.IsNullOrWhiteSpace(comando.Nome))
             return Result.Fail("O nome do curso é obrigatório.");
@@ -23,10 +30,11 @@ public class CadastrarCursoHandler
         if (string.IsNullOrWhiteSpace(comando.Descricao))
             return Result.Fail("A descrição do curso é obrigatória.");
 
-        var conteudo = new ConteudoProgramatico(comando.Descricao, ""); // por enquanto vazio
-        var curso = new Curso(comando.Nome, conteudo, "TDD");
+        var conteudo = new ConteudoProgramatico(comando.Descricao, string.Empty);
+        var curso = new Curso(comando.Nome, conteudo, _usuarioContexto.ObterUsuario());
 
-        _repositorio.Adicionar(curso);
+        await _repositorio.Adicionar(curso);
+        await _unitOfWork.Commit();
 
         return Result.Ok("Curso cadastrado com sucesso.");
     }

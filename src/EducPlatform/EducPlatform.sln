@@ -35,7 +35,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Tests.Unit", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Application", "CursoContext.Application\CursoContext.Application.csproj", "{9529ADE3-F8C1-4509-AF8F-CA2C9093637D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Infraestructure", "CursoContext.Infraestructure\CursoContext.Infraestructure.csproj", "{F48CD3C2-A29D-4CC1-857C-177B20D541EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Infrastructure", "CursoContext.Infraestructure\CursoContext.Infrastructure.csproj", "{F48CD3C2-A29D-4CC1-857C-177B20D541EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Tests.Shared", "CursoContext.Tests.Shared\CursoContext.Tests.Shared.csproj", "{AF340A72-834D-40D6-A251-59F1F42187B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Tests.Performance", "CursoContext.Tests.Performance\CursoContext.Tests.Performance.csproj", "{100731EF-C56B-4C26-AD5F-FDDA5DC36010}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursoContext.Tests.Integration", "CursoContext.Tests.Integration\CursoContext.Tests.Integration.csproj", "{5D904C73-0E6A-4877-A1AF-501F2B6C1A8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +97,18 @@ Global
 		{F48CD3C2-A29D-4CC1-857C-177B20D541EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F48CD3C2-A29D-4CC1-857C-177B20D541EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F48CD3C2-A29D-4CC1-857C-177B20D541EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF340A72-834D-40D6-A251-59F1F42187B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF340A72-834D-40D6-A251-59F1F42187B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF340A72-834D-40D6-A251-59F1F42187B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF340A72-834D-40D6-A251-59F1F42187B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100731EF-C56B-4C26-AD5F-FDDA5DC36010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100731EF-C56B-4C26-AD5F-FDDA5DC36010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100731EF-C56B-4C26-AD5F-FDDA5DC36010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100731EF-C56B-4C26-AD5F-FDDA5DC36010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D904C73-0E6A-4877-A1AF-501F2B6C1A8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D904C73-0E6A-4877-A1AF-501F2B6C1A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D904C73-0E6A-4877-A1AF-501F2B6C1A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D904C73-0E6A-4877-A1AF-501F2B6C1A8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +130,9 @@ Global
 		{FF58E70D-AE67-4B59-96A0-60184CF204C8} = {27CBD6BF-38C0-4E4C-A311-207E35201486}
 		{9529ADE3-F8C1-4509-AF8F-CA2C9093637D} = {BDA772DA-D25F-424C-BBE0-67511BD4C5A0}
 		{F48CD3C2-A29D-4CC1-857C-177B20D541EF} = {BDA772DA-D25F-424C-BBE0-67511BD4C5A0}
+		{AF340A72-834D-40D6-A251-59F1F42187B3} = {27CBD6BF-38C0-4E4C-A311-207E35201486}
+		{100731EF-C56B-4C26-AD5F-FDDA5DC36010} = {27CBD6BF-38C0-4E4C-A311-207E35201486}
+		{5D904C73-0E6A-4877-A1AF-501F2B6C1A8E} = {27CBD6BF-38C0-4E4C-A311-207E35201486}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E1A6259-E389-40BC-B0CC-90B98C5CE55C}

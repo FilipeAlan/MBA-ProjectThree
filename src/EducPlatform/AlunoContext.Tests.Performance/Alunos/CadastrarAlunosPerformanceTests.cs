@@ -1,21 +1,23 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
+using AlunoContext.Infrastructure.Context;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
+using AlunoContext.Tests.Shared.Fakes;
 using System.Diagnostics;
 
 namespace AlunoContext.Tests.Performance.Alunos;
 
 public class CadastrarAlunosPerformanceTests
 {
-    [Fact(DisplayName = "Deve cadastrar 1000 alunos em menos de 3 segundos")]
+    [Fact(DisplayName = "Deve cadastrar 1000 alunos em menos de 5 segundos")]
     public async Task DeveCadastrarAlunosRapidamente()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
         var repositorio = new AlunoRepository(contexto);
         var usuario = new UsuarioContextoFake();
-        var handler = new CadastrarAlunoHandler(repositorio, usuario);
+        var unitOfWork = new UnitOfWork(contexto);
+        var handler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();

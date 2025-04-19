@@ -4,9 +4,10 @@ namespace CursoContext.Domain.Repositories;
 
 public interface ICursoRepository
 {
-    void Adicionar(Curso aluno);
-    void Excluir(Curso aluno);
-    List<Curso> Listar();
-    Curso ObterPorId(Guid id);    
+    Task Adicionar(Curso curso);
+    Task Atualizar(Curso curso);
+    Task Excluir(Curso curso);
+    Task<List<Curso>> Listar();
+    Task<Curso> ObterPorId(Guid id);    
 }
 

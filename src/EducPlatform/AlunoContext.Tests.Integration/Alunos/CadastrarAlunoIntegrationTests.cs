@@ -1,7 +1,8 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
+using AlunoContext.Infrastructure.Context;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
+using AlunoContext.Tests.Shared.Fakes;
 
 namespace AlunoContext.Tests.Integration.Alunos;
 
@@ -14,7 +15,8 @@ public class CadastrarAlunoIntegrationTests
         using var contexto = TestDbContextFactory.CriarContexto();
         var repositorio = new AlunoRepository(contexto);
         var usuarioContexto = new UsuarioContextoFake();
-        var handler = new CadastrarAlunoHandler(repositorio, usuarioContexto);
+        var unitOfWork = new UnitOfWork(contexto);
+        var handler = new CadastrarAlunoHandler(repositorio, usuarioContexto, unitOfWork);
 
         var comando = new CadastrarAlunoComando("Filipe", "filipe@email.com");
 

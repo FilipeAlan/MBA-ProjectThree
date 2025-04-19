@@ -10,21 +10,26 @@ public class CadastrarAlunoTests
     private readonly AlunoRepositorioFake _repositorioFake;
     private readonly UsuarioContextoFake _usuarioFake;
     private readonly CadastrarAlunoHandler _handler;
+    private readonly UnitOfWorkFake _unitOfWorkFake;
 
     public CadastrarAlunoTests()
     {
         _repositorioFake = new AlunoRepositorioFake();
         _usuarioFake = new UsuarioContextoFake();
-        _handler = new CadastrarAlunoHandler(_repositorioFake, _usuarioFake);
+        _unitOfWorkFake = new UnitOfWorkFake();
+        _handler = new CadastrarAlunoHandler(_repositorioFake, _usuarioFake, _unitOfWorkFake);
     }
 
     [Fact(DisplayName = "Deve cadastrar aluno quando os dados forem válidos")]
     public async Task DeveCadastrarAluno_ComDadosValidos()
     {
+        // Arrange
         var comando = GeradorDeComando.CriarAlunoValido();
 
+        // Act
         var resultado = await _handler.Handle(comando);
 
+        // Assert
         Assert.True(resultado.Sucesso);
         Assert.Single(_repositorioFake.Alunos);
         Assert.Equal(comando.Nome, _repositorioFake.Alunos[0].Nome);
@@ -33,10 +38,13 @@ public class CadastrarAlunoTests
     [Fact(DisplayName = "Não deve cadastrar aluno quando o nome estiver vazio")]
     public async Task NaoDeveCadastrarAluno_ComNomeVazio()
     {
+        // Arrange
         var comando = GeradorDeComando.CriarAlunoComNomeVazio();
 
+        // Act
         var resultado = await _handler.Handle(comando);
 
+        // Assert
         Assert.False(resultado.Sucesso);
         Assert.Contains("nome", resultado.Mensagem.ToLower());
         Assert.Empty(_repositorioFake.Alunos);
@@ -45,10 +53,13 @@ public class CadastrarAlunoTests
     [Fact(DisplayName = "Não deve cadastrar aluno quando o e-mail for inválido")]
     public async Task NaoDeveCadastrarAluno_ComEmailInvalido()
     {
+        // Arrange
         var comando = GeradorDeComando.CriarAlunoComEmailInvalido();
 
+        // Act
         var resultado = await _handler.Handle(comando);
 
+        // Assert
         Assert.False(resultado.Sucesso);
         Assert.Contains("e-mail", resultado.Mensagem.ToLower());
         Assert.Empty(_repositorioFake.Alunos);

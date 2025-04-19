@@ -8,16 +8,17 @@ namespace AlunoContext.Tests.Unit.Alunos;
 
 public class DeletarAlunoTests
 {
-    private readonly AlunoRepositorioFake _repositorioFake;
-    private readonly UsuarioContextoFake _usuarioFake;
+    private readonly AlunoRepositorioFake _repositorioFake;    
+    private readonly UnitOfWorkFake _unitOfWorkFake;
     private readonly DeletarAlunoHandler _handler;
 
     public DeletarAlunoTests()
     {
-        _repositorioFake = new AlunoRepositorioFake();
-        _usuarioFake = new UsuarioContextoFake();
-        _handler = new DeletarAlunoHandler(_repositorioFake, _usuarioFake);
+        _repositorioFake = new AlunoRepositorioFake();        
+        _unitOfWorkFake = new UnitOfWorkFake();
+        _handler = new DeletarAlunoHandler(_repositorioFake, _unitOfWorkFake);
     }
+
 
     [Fact(DisplayName = "Deve remover aluno quando o ID for válido")]
     public async Task DeveRemoverAluno_Existente()
@@ -52,7 +53,7 @@ public class DeletarAlunoTests
         await _repositorioFake.Adicionar(aluno);
 
         var comando = new DeletarAlunoComando(aluno.Id);
-        var handler = new DeletarAlunoHandler(_repositorioFake, _usuarioFake);
+        var handler = new DeletarAlunoHandler(_repositorioFake, _unitOfWorkFake);
 
         var resultado = await handler.Handle(comando);
 

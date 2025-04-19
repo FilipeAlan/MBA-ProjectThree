@@ -1,7 +1,8 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
+using AlunoContext.Infrastructure.Context;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
+using AlunoContext.Tests.Shared.Fakes;
 using System.Diagnostics;
 
 namespace AlunoContext.Tests.Performance.Alunos;
@@ -9,15 +10,16 @@ namespace AlunoContext.Tests.Performance.Alunos;
 public class ObterAlunoPerformanceTests
 {
     [Fact(DisplayName = "Deve obter aluno pelo ID em menos de 100ms")]
-    public void DeveBuscarAlunoPorIdRapidamente()
+    public async Task DeveBuscarAlunoPorIdRapidamente()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
         var repositorio = new AlunoRepository(contexto);
+        var unitOfWork = new UnitOfWork(contexto);
         var usuario = new UsuarioContextoFake();
-        var handler = new CadastrarAlunoHandler(repositorio, usuario);
+        var handler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
 
-        handler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
+        await handler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
         var aluno = contexto.Alunos.First();
 
         var stopwatch = new Stopwatch();
