@@ -10,7 +10,7 @@ namespace AlunoContext.Tests.Performance.Alunos;
 public class DeletarAlunoPerformanceTests
 {
     [Fact(DisplayName = "Deve deletar 1000 alunos em menos de 3 segundos")]
-    public void DeveDeletarAlunosRapidamente()
+    public async Task DeveDeletarAlunosRapidamente()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -21,7 +21,7 @@ public class DeletarAlunoPerformanceTests
         for (int i = 0; i < 1000; i++)
         {
             var comando = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
-            cadastrarHandler.Handle(comando);
+            await cadastrarHandler.Handle(comando);
         }
 
         var alunos = contexto.Alunos.Select(a => a.Id).ToList();
@@ -34,7 +34,7 @@ public class DeletarAlunoPerformanceTests
         foreach (var id in alunos)
         {
             var comando = new DeletarAlunoComando(id);
-            deletarHandler.Handle(comando);
+            await deletarHandler.Handle(comando);
         }
 
         stopwatch.Stop();
