@@ -3,6 +3,7 @@ using CursoContext.Infrastructure.Context;
 using CursoContext.Infrastructure.Repositories;
 using CursoContext.Tests.Integration.Shared;
 using CursoContext.Tests.Shared.Fakes;
+using Xunit;
 
 namespace CursoContext.Tests.Integration.Curso;
 
@@ -15,14 +16,13 @@ public class CadastrarCursoIntegrationTests
         using var contexto = TestDbContextFactory.CriarContexto();
         var repositorio = new CursoRepository(contexto);
         var usuario = new UsuarioContextoFake();
-        var unitOfWork = new UnitOfWorkFake();
+        var unitOfWork = new UnitOfWork(contexto);
         var handler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
 
         var comando = new CadastrarCursoComando("Curso de TDD", "Aprenda a testar antes de codar");
 
         // Act
         var resultado = await handler.Handle(comando);
-        await unitOfWork.Commit();
 
         // Assert
         Assert.True(resultado.Sucesso);
