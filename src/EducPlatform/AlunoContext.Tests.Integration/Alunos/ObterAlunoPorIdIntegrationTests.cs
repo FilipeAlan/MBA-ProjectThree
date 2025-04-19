@@ -1,14 +1,14 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Testes.Shared.Fakes;
+using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
 
-namespace AlunoContext.Tests.Integration.Aluno;
+namespace AlunoContext.Tests.Integration.Alunos;
 
 public class ObterAlunoPorIdIntegrationTests
 {
     [Fact(DisplayName = "Deve retornar aluno existente pelo ID")]
-    public void DeveObterAluno_ComSucesso()
+    public async Task DeveObterAluno_ComSucesso()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -16,11 +16,11 @@ public class ObterAlunoPorIdIntegrationTests
         var usuario = new UsuarioContextoFake();
 
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario);
-        cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
+        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
         var alunoCriado = contexto.Alunos.First();
 
         // Act
-        var aluno = repositorio.ObterPorId(alunoCriado.Id);
+        var aluno = await repositorio.ObterPorId(alunoCriado.Id);
 
         // Assert
         Assert.NotNull(aluno);

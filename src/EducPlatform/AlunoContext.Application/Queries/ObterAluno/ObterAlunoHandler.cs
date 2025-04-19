@@ -1,6 +1,7 @@
-﻿using AlunoContext.Application.Dtos;
-using AlunoContext.Application.Queries.ObterAluno;
+﻿using AlunoContext.Application.Dto;
 using AlunoContext.Domain.Repositories;
+
+namespace AlunoContext.Application.Queries.ObterAluno;
 
 public class ObterAlunoHandler
 {
@@ -11,9 +12,9 @@ public class ObterAlunoHandler
         _repositorio = repositorio;
     }
 
-    public AlunoDetalheDto? Handle(ObterAlunoQuery query)
+    public async Task<AlunoDetalheDto?> Handle(ObterAlunoQuery query)
     {
-        var aluno = _repositorio.ObterPorId(query.Id);
+        var aluno = await _repositorio.ObterPorId(query.Id);
         if (aluno is null)
             return null;
 

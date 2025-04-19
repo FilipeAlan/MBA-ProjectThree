@@ -1,4 +1,4 @@
-﻿namespace AlunoContext.Application.Common;
+﻿namespace AlunoContext.Domain.Common;
 
 public interface IUsuarioContexto
 {

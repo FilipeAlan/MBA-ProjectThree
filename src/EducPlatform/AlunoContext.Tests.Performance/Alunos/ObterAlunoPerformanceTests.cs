@@ -1,10 +1,10 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Testes.Shared.Fakes;
+using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
 using System.Diagnostics;
 
-namespace AlunoContext.Tests.Performance.Aluno;
+namespace AlunoContext.Tests.Performance.Alunos;
 
 public class ObterAlunoPerformanceTests
 {

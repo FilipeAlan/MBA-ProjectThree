@@ -1,22 +1,22 @@
 ﻿using AlunoContext.Application.Queries.ObterAluno;
-using AlunoContext.Testes.Shared.Builders;
+using AlunoContext.Tests.Shared.Builders;
 using AlunoContext.Tests.Unit.Fakes;
 
-namespace AlunoContext.Testes.Unit.Aluno;
+namespace AlunoContext.Tests.Unit.Alunos;
 
 public class ObterAlunoTests
 {
-    private readonly RepositorioFake _repositorioFake;
+    private readonly AlunoRepositorioFake _repositorioFake;
     private readonly ObterAlunoHandler _handler;
 
     public ObterAlunoTests()
     {
-        _repositorioFake = new RepositorioFake();
+        _repositorioFake = new AlunoRepositorioFake();
         _handler = new ObterAlunoHandler(_repositorioFake);
     }
 
     [Fact(DisplayName = "Deve retornar aluno quando o ID existir")]
-    public void DeveObterAluno_Existente()
+    public async Task DeveObterAluno_Existente()
     {
         // Arrange
         var aluno = AlunoBuilder.Novo()
@@ -24,11 +24,11 @@ public class ObterAlunoTests
             .ComEmail("filipe@email.com")
             .Construir();
 
-        _repositorioFake.Adicionar(aluno);
+        await _repositorioFake.Adicionar(aluno);
         var query = new ObterAlunoQuery(aluno.Id);
 
         // Act
-        var resultado = _handler.Handle(query);
+        var resultado = await _handler.Handle(query);
 
         // Assert
         Assert.NotNull(resultado);
@@ -38,13 +38,13 @@ public class ObterAlunoTests
     }
 
     [Fact(DisplayName = "Deve retornar nulo quando o ID não existir")]
-    public void DeveObterAluno_NaoExistente()
+    public async Task DeveObterAluno_NaoExistente()
     {
         // Arrange
         var query = new ObterAlunoQuery(Guid.NewGuid());
 
         // Act
-        var resultado = _handler.Handle(query);
+        var resultado = await _handler.Handle(query);
 
         // Assert
         Assert.Null(resultado);

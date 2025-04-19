@@ -1,14 +1,14 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Testes.Shared.Fakes;
+using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
 
-namespace AlunoContext.Tests.Integration.Aluno;
+namespace AlunoContext.Tests.Integration.Alunos;
 
 public class CadastrarAlunoIntegrationTests
 {
     [Fact(DisplayName = "Deve cadastrar aluno e persistir no banco de dados")]
-    public void DeveCadastrarAluno_ComSucesso()
+    public async Task DeveCadastrarAluno_ComSucesso()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -19,7 +19,7 @@ public class CadastrarAlunoIntegrationTests
         var comando = new CadastrarAlunoComando("Filipe", "filipe@email.com");
 
         // Act
-        var resultado = handler.Handle(comando);
+        var resultado = await handler.Handle(comando);
 
         // Assert
         Assert.True(resultado.Sucesso);

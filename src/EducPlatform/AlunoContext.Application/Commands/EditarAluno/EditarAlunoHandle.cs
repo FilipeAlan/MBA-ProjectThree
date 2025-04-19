@@ -1,6 +1,8 @@
-﻿using AlunoContext.Application.Common;
+﻿using AlunoContext.Domain.Common;
 using AlunoContext.Domain.Repositories;
 using BuildingBlocks.Results;
+
+namespace AlunoContext.Application.Commands.EditarAluno;
 
 public class EditarAlunoHandler
 {
@@ -13,14 +15,16 @@ public class EditarAlunoHandler
         _usuarioContexto = usuarioContexto;
     }
 
-    public Result Handle(EditarAlunoComando comando)
+    public async Task<Result> Handle(EditarAlunoComando comando)
     {
-        var aluno = _repositorio.ObterPorId(comando.Id);
+        var aluno = await _repositorio.ObterPorId(comando.Id);
         if (aluno is null)
             return Result.Fail("Aluno não encontrado.");
 
         aluno.AtualizarNome(comando.Nome, _usuarioContexto.ObterUsuario());
         aluno.AtualizarEmail(comando.Email, _usuarioContexto.ObterUsuario());
+
+        await _repositorio.Atualizar(aluno);
 
         return Result.Ok("Aluno atualizado com sucesso.");
     }

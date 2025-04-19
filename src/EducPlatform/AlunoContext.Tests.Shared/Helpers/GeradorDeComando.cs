@@ -1,6 +1,6 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 
-namespace AlunoContext.Testes.Shared.Helpers;
+namespace AlunoContext.Tests.Shared.Helpers;
 
 public static class GeradorDeComando
 {

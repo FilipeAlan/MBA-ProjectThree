@@ -1,7 +1,8 @@
 ﻿using BuildingBlocks.Common;
+using CursoContext.Domain.Entities;
 using CursoContext.Domain.ValueObjects;
 
-namespace CursoContext.Domain.Entities;
+namespace CursoContext.Domain.Aggregates;
 
 public class Curso : EntityBase
 {
@@ -20,5 +21,11 @@ public class Curso : EntityBase
     public void AdicionarAula(Aula aula)
     {
         _aulas.Add(aula);
+    }
+    public void Atualizar(string novoNome, ConteudoProgramatico novoConteudo)
+    {
+        Nome = novoNome;
+        Conteudo = novoConteudo;
+        Atualizar(UsuarioAtualizacao);
     }
 }

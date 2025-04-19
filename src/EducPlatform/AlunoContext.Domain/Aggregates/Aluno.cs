@@ -7,13 +7,10 @@ public class Aluno : EntityBase
 {
     public string Nome { get; private set; }
     public string Email { get; private set; }
-
     private readonly List<Matricula> _matriculas = new();
     public IReadOnlyCollection<Matricula> Matriculas => _matriculas.AsReadOnly();
-
     private readonly List<Certificado> _certificados = new();
     public IReadOnlyCollection<Certificado> Certificados => _certificados.AsReadOnly();
-
     protected Aluno() : base("SYSTEM") // Para EF Core
     {
     }
@@ -41,4 +38,9 @@ public class Aluno : EntityBase
         Nome = novoNome;
         Atualizar(usuario);
     }
+    public bool PodeSerExcluido()
+    {
+        return !Matriculas.Any() && !Certificados.Any();
+    }
+
 }

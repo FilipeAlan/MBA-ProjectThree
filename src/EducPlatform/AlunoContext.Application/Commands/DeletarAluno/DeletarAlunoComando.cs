@@ -1,5 +1,5 @@
-﻿namespace AlunoContext.Application.Commands.DeletarAluno
-{
+﻿namespace AlunoContext.Application.Commands.DeletarAluno;
+
     public class DeletarAlunoComando
     {
         public Guid Id { get; }
@@ -8,4 +8,4 @@
             Id = id;
         }
     }
-}
+

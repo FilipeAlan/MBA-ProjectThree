@@ -1,14 +1,14 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Testes.Shared.Fakes;
+using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
 
-namespace AlunoContext.Tests.Integration.Aluno;
+namespace AlunoContext.Tests.Integration.Alunos;
 
 public class ListarAlunosIntegrationTests
 {
     [Fact(DisplayName = "Deve retornar todos os alunos cadastrados")]
-    public void DeveListarTodosOsAlunos()
+    public async Task DeveListarTodosOsAlunos()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -16,11 +16,11 @@ public class ListarAlunosIntegrationTests
         var usuario = new UsuarioContextoFake();
 
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario);
-        cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
-        cadastrarHandler.Handle(new CadastrarAlunoComando("João", "joao@email.com"));
+        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
+        await cadastrarHandler.Handle(new CadastrarAlunoComando("João", "joao@email.com"));
 
         // Act
-        var alunos = repositorio.Listar();
+        var alunos = await repositorio.Listar();
 
         // Assert
         Assert.Equal(2, alunos.Count);

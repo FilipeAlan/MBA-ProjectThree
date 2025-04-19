@@ -1,29 +1,29 @@
 ﻿using AlunoContext.Application.Queries.ListarAlunos;
-using AlunoContext.Testes.Shared.Builders;
+using AlunoContext.Tests.Shared.Builders;
 using AlunoContext.Tests.Unit.Fakes;
 
-namespace AlunoContext.Testes.Unit.Aluno;
+namespace AlunoContext.Tests.Unit.Alunos;
 
 public class ListarAlunosTests
 {
-    private readonly RepositorioFake _repositorioFake;
+    private readonly AlunoRepositorioFake _repositorioFake;
 
     public ListarAlunosTests()
     {
-        _repositorioFake = new RepositorioFake();
+        _repositorioFake = new AlunoRepositorioFake();
     }
 
     [Fact(DisplayName = "Deve retornar todos os alunos cadastrados")]
-    public void DeveListarTodosOsAlunos()
+    public async Task DeveListarTodosOsAlunos()
     {
         var aluno1 = AlunoBuilder.Novo().ComNome("Filipe").Construir();
         var aluno2 = AlunoBuilder.Novo().ComNome("João").Construir();
 
-        _repositorioFake.Adicionar(aluno1);
-        _repositorioFake.Adicionar(aluno2);
+        await _repositorioFake.Adicionar(aluno1);
+        await _repositorioFake.Adicionar(aluno2);
 
         var handler = new ListarAlunosHandler(_repositorioFake);
-        var resultado = handler.Handle(new ListarAlunosQuery());
+        var resultado = await handler.Handle(new ListarAlunosQuery());
 
         Assert.Equal(2, resultado.Count);
         Assert.Contains(resultado, x => x.Nome == "Filipe");
@@ -31,11 +31,11 @@ public class ListarAlunosTests
     }
 
     [Fact(DisplayName = "Deve retornar lista vazia quando não houver alunos cadastrados")]
-    public void DeveRetornarListaVazia_QuandoNaoExistiremAlunos()
+    public async Task DeveRetornarListaVazia_QuandoNaoExistiremAlunos()
     {
         var handler = new ListarAlunosHandler(_repositorioFake);
 
-        var resultado = handler.Handle(new ListarAlunosQuery());
+        var resultado = await handler.Handle(new ListarAlunosQuery());
 
         Assert.NotNull(resultado); // deve retornar lista, não null
         Assert.Empty(resultado);   // deve estar vazia
