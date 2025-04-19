@@ -9,7 +9,7 @@ namespace AlunoContext.Tests.Performance.Alunos;
 public class CadastrarAlunosPerformanceTests
 {
     [Fact(DisplayName = "Deve cadastrar 1000 alunos em menos de 3 segundos")]
-    public void DeveCadastrarAlunosRapidamente()
+    public async Task DeveCadastrarAlunosRapidamente()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -24,7 +24,7 @@ public class CadastrarAlunosPerformanceTests
         for (int i = 0; i < 1000; i++)
         {
             var comando = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
-            handler.Handle(comando);
+            await handler.Handle(comando);
         }
 
         stopwatch.Stop();
