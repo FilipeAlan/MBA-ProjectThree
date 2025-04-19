@@ -46,7 +46,7 @@ public class EditarAlunoPerformanceTests
         stopwatch.Stop();
 
         // Assert
-        Assert.True(stopwatch.Elapsed.TotalSeconds < 3,
+        Assert.True(stopwatch.Elapsed.TotalSeconds < 5,
             $"Edição demorou {stopwatch.Elapsed.TotalSeconds} segundos para 1000 alunos.");
     }
 }

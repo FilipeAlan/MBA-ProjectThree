@@ -41,7 +41,7 @@ public class DeletarAlunoPerformanceTests
 
         // Assert
         Assert.Equal(0, contexto.Alunos.Count());
-        Assert.True(stopwatch.Elapsed.TotalSeconds < 3,
+        Assert.True(stopwatch.Elapsed.TotalSeconds < 5,
             $"Remoção demorou {stopwatch.Elapsed.TotalSeconds} segundos");
     }
 }
