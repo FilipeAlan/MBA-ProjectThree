@@ -1,7 +1,8 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
+using AlunoContext.Infrastructure.Context;
 using AlunoContext.Infrastructure.Repositories;
-using AlunoContext.Tests.Shared.Fakes;
 using AlunoContext.Tests.Integration.Shared;
+using AlunoContext.Tests.Shared.Fakes;
 using System.Diagnostics;
 
 namespace AlunoContext.Tests.Performance.Alunos;
@@ -15,7 +16,8 @@ public class ListarAlunosPerformanceTests
         using var contexto = TestDbContextFactory.CriarContexto();
         var repositorio = new AlunoRepository(contexto);
         var usuario = new UsuarioContextoFake();
-        var handler = new CadastrarAlunoHandler(repositorio, usuario);
+        var unitOfWork = new UnitOfWork(contexto);
+        var handler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
 
         for (int i = 0; i < 1000; i++)
         {

@@ -1,4 +1,4 @@
-﻿namespace AlunoContext.Domain.Common;
+﻿namespace BuildingBlocks.Common;
 
 public interface IUsuarioContexto
 {

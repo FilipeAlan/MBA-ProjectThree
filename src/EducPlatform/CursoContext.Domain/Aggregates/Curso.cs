@@ -22,10 +22,11 @@ public class Curso : EntityBase
     {
         _aulas.Add(aula);
     }
-    public void Atualizar(string novoNome, ConteudoProgramatico novoConteudo)
+    public void Atualizar(string novoNome, ConteudoProgramatico novoConteudo, string usuario)
     {
         Nome = novoNome;
         Conteudo = novoConteudo;
-        Atualizar(UsuarioAtualizacao);
+        Atualizar(usuario);
     }
+
 }

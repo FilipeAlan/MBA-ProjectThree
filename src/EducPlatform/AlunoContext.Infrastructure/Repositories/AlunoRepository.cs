@@ -4,7 +4,6 @@ using AlunoContext.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlunoContext.Infrastructure.Repositories;
-
 public class AlunoRepository : IAlunoRepository
 {
     private readonly AlunoDbContext _context;
@@ -13,22 +12,24 @@ public class AlunoRepository : IAlunoRepository
     {
         _context = context;
     }
+
     public async Task Adicionar(Aluno aluno)
     {
-       await _context.Alunos.AddAsync(aluno);
-       await _context.SaveChangesAsync();
+        await _context.Alunos.AddAsync(aluno);
     }
-    public async Task Atualizar(Aluno aluno)
+
+    public Task Atualizar(Aluno aluno)
     {
-        // Se aluno foi recuperado pelo contexto, isso pode ser omitido:
         _context.Alunos.Update(aluno);
-       await _context.SaveChangesAsync(); // aplica alterações no banco
+        return Task.CompletedTask;
     }
-    public async Task Excluir(Aluno aluno)
+
+    public Task Excluir(Aluno aluno)
     {
         _context.Alunos.Remove(aluno);
-        await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
+
     public async Task<Aluno?> ObterPorId(Guid id)
     {
         return await _context.Alunos
@@ -36,6 +37,7 @@ public class AlunoRepository : IAlunoRepository
             .Include(a => a.Certificados)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
+
     public async Task<List<Aluno>> Listar()
     {
         return await _context.Alunos

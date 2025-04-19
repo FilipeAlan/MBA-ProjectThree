@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CursoContext.Application\CursoContext.Application.csproj" />
     <ProjectReference Include="..\CursoContext.Domain\CursoContext.Domain.csproj" />
+    <ProjectReference Include="..\CursoContext.Tests.Integration\CursoContext.Tests.Integration.csproj" />
     <ProjectReference Include="..\CursoContext.Tests.Shared\CursoContext.Tests.Shared.csproj" />
   </ItemGroup>
 

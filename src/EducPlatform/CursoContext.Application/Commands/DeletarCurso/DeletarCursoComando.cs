@@ -1,6 +1,11 @@
-﻿namespace CursoContext.Application.Commands.DeletarCurso
+﻿namespace CursoContext.Application.Commands.DeletarCurso;
+
+public class DeletarCursoComando
 {
-    internal class DeletarCursoComando
+    public Guid Id { get; }
+
+    public DeletarCursoComando(Guid id)
     {
+        Id = id;
     }
 }
