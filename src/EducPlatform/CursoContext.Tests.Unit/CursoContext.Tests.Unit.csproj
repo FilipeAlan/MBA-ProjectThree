@@ -30,4 +30,12 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\MBA\MBA-ProjectThree\src\EducPlatform\CursoContext.Tests.Unit\Cursos\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\MBA\MBA-ProjectThree\src\EducPlatform\CursoContext.Tests.Unit\Cursos\.editorconfig" />
+  </ItemGroup>
+
 </Project>

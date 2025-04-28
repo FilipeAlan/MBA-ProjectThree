@@ -1,4 +1,6 @@
 ﻿using CursoContext.Domain.Aggregates;
+using CursoContext.Domain.Entities;
+using CursoContext.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace CursoContext.Infrastructure.Context;
@@ -7,8 +9,9 @@ namespace CursoContext.Infrastructure.Context;
         public CursoDbContext(DbContextOptions<CursoDbContext> options) : base(options) { }
 
         public DbSet<Curso> Cursos => Set<Curso>();
+        public DbSet<Aula> Aulas => Set<Aula>();      
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CursoDbContext).Assembly);
         }

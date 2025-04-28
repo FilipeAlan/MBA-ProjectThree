@@ -1,4 +1,6 @@
-﻿namespace BuildingBlocks.Common;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BuildingBlocks.Common;
 
 public abstract class EntityBase
 {
@@ -7,7 +9,8 @@ public abstract class EntityBase
     public DateTime? DataAtualizacao { get; private set; }
     public string UsuarioCriacao { get; private set; }
     public string UsuarioAtualizacao { get; private set; }
-
+    [Timestamp]
+    public byte[] RowVersion { get; private set; } = Array.Empty<byte>();
     protected EntityBase(string usuarioCriacao)
     {
         Id = Guid.NewGuid();

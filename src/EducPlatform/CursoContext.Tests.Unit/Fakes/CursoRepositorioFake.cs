@@ -1,4 +1,5 @@
 ﻿using CursoContext.Domain.Aggregates;
+using CursoContext.Domain.Entities;
 using CursoContext.Domain.Repositories;
 
 namespace CursoContext.Tests.Unit.Fakes;
@@ -38,4 +39,9 @@ public class CursoRepositorioFake : ICursoRepository
 
         return Task.CompletedTask;
     }
+    public Task AdicionarAula(Aula aula)
+    {        
+        return Task.CompletedTask;
+    }
+
 }

@@ -45,4 +45,10 @@ public class AlunoRepository : IAlunoRepository
             .Include(a => a.Certificados)
             .ToListAsync();
     }
+    public async Task<Aluno?> ObterAlunoPorMatriculaId(Guid matriculaId)
+    {
+        return await _context.Alunos
+            .Include(a => a.Matriculas)
+            .FirstOrDefaultAsync(a => a.Matriculas.Any(m => m.Id == matriculaId));
+    }
 }

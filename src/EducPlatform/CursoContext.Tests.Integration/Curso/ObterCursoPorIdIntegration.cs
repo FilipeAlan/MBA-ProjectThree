@@ -6,10 +6,10 @@ using CursoContext.Tests.Shared.Fakes;
 
 namespace CursoContext.Tests.Integration.Curso;
 
-public class CadastrarCursoIntegrationTests
+public class ObterCursoPorIdIntegrationTests
 {
-    [Fact(DisplayName = "Deve cadastrar curso e persistir no banco de dados")]
-    public async Task DeveCadastrarCurso_ComSucesso()
+    [Fact(DisplayName = "Deve retornar curso existente pelo ID")]
+    public async Task DeveRetornarCursoPorId()
     {
         // Arrange
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -18,14 +18,15 @@ public class CadastrarCursoIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
         var handler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
 
-        var comando = new CadastrarCursoComando("Curso de TDD", "Aprenda a testar antes de codar");
+        await handler.Handle(new CadastrarCursoComando("Curso A", "Descrição A"));
+
+        var cursoId = contexto.Cursos.First().Id;
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var curso = await repositorio.ObterPorId(cursoId);
 
         // Assert
-        Assert.True(resultado.Sucesso);
-        Assert.Single(contexto.Cursos);
-        Assert.Equal("Curso de TDD", contexto.Cursos.First().Nome);
+        Assert.NotNull(curso);
+        Assert.Equal("Curso A", curso.Nome);
     }
 }

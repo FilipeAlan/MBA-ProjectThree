@@ -1,4 +1,5 @@
 ﻿using CursoContext.Domain.Aggregates;
+using CursoContext.Domain.Entities;
 using CursoContext.Domain.Repositories;
 using CursoContext.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,11 @@ public class CursoRepository : ICursoRepository
     {
         _context = context;
     }
-
+    public Task AdicionarAula(Aula aula)
+    {
+        _context.Aulas.Add(aula);
+        return Task.CompletedTask;
+    }
     public async Task Adicionar(Curso curso)
     {
         await _context.Cursos.AddAsync(curso);
@@ -21,7 +26,7 @@ public class CursoRepository : ICursoRepository
 
     public Task Atualizar(Curso curso)
     {
-        _context.Cursos.Update(curso);
+        _context.Entry(curso).State = EntityState.Modified;
         return Task.CompletedTask;
     }
 
@@ -33,9 +38,16 @@ public class CursoRepository : ICursoRepository
 
     public async Task<Curso?> ObterPorId(Guid id)
     {
-        return await _context.Cursos
+        var curso = await _context.Cursos
             .Include(c => c.Aulas)
             .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (curso != null)
+        {
+            _context.Attach(curso);
+        }
+
+        return curso;
     }
 
     public async Task<List<Curso>> Listar()

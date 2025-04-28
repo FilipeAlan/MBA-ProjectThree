@@ -1,4 +1,5 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
+using AlunoContext.Application.Queries.ListarAlunos;
 using AlunoContext.Infrastructure.Context;
 using AlunoContext.Infrastructure.Repositories;
 using AlunoContext.Tests.Integration.Shared;
@@ -16,12 +17,15 @@ public class ListarAlunosIntegrationTests
         var repositorio = new AlunoRepository(contexto);
         var usuario = new UsuarioContextoFake();
         var unitOfWork = new UnitOfWork(contexto);
+
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
         await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
         await cadastrarHandler.Handle(new CadastrarAlunoComando("João", "joao@email.com"));
 
+        var listarHandler = new ListarAlunosHandler(repositorio);
+
         // Act
-        var alunos = await repositorio.Listar();
+        var alunos = await listarHandler.Handle(new ListarAlunosQuery());
 
         // Assert
         Assert.Equal(2, alunos.Count);

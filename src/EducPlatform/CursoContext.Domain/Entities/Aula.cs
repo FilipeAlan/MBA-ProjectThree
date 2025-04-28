@@ -12,13 +12,14 @@ public class Aula : EntityBase
     public Aula(string titulo, string conteudo, string usuarioCriacao)
         : base(usuarioCriacao)
     {
+        if (string.IsNullOrWhiteSpace(titulo))
+            throw new ArgumentException("Título da aula não pode ser vazio.", nameof(titulo));
+
+        if (string.IsNullOrWhiteSpace(conteudo))
+            throw new ArgumentException("Conteúdo da aula não pode ser vazio.", nameof(conteudo));
+
         Titulo = titulo;
         Conteudo = conteudo;
     }
-
-    public void AtualizarConteudo(string novoConteudo, string usuario)
-    {
-        Conteudo = novoConteudo;
-        Atualizar(usuario);
-    }
 }
+

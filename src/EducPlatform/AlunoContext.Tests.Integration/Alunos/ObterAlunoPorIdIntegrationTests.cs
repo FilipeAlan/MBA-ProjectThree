@@ -1,4 +1,5 @@
 ﻿using AlunoContext.Application.Commands.CadastrarAluno;
+using AlunoContext.Application.Queries.ObterAluno;
 using AlunoContext.Infrastructure.Context;
 using AlunoContext.Infrastructure.Repositories;
 using AlunoContext.Tests.Integration.Shared;
@@ -16,12 +17,16 @@ public class ObterAlunoPorIdIntegrationTests
         var repositorio = new AlunoRepository(contexto);
         var usuario = new UsuarioContextoFake();
         var unitOfWork = new UnitOfWork(contexto);
+
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
         await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
         var alunoCriado = contexto.Alunos.First();
 
+        var obterHandler = new ObterAlunoHandler(repositorio);
+        var query = new ObterAlunoQuery(alunoCriado.Id);
+
         // Act
-        var aluno = await repositorio.ObterPorId(alunoCriado.Id);
+        var aluno = await obterHandler.Handle(query);
 
         // Assert
         Assert.NotNull(aluno);

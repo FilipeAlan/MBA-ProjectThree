@@ -3,7 +3,7 @@
 namespace AlunoContext.Domain.Repositories;
 
 public interface IAlunoRepository
-{
+{    
     Task Adicionar(Aluno aluno);
     Task Excluir(Aluno aluno);
     Task Atualizar(Aluno aluno);
