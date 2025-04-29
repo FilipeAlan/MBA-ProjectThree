@@ -9,4 +9,5 @@ public interface IAlunoRepository
     Task Atualizar(Aluno aluno);
     Task<List<Aluno>> Listar();
     Task<Aluno> ObterPorId(Guid id);
+    Task<Aluno> ObterAlunoPorMatriculaId(Guid matriculaId);
 }

@@ -38,4 +38,10 @@ public class AlunoRepositorioFake : IAlunoRepository
     {
         return Task.FromResult(Alunos.ToList());
     }
+
+    public Task<Aluno?> ObterAlunoPorMatriculaId(Guid matriculaId)
+    {
+        var aluno = Alunos.FirstOrDefault(a => a.Matriculas.Any(m => m.Id == matriculaId));
+        return Task.FromResult(aluno);
+    }
 }

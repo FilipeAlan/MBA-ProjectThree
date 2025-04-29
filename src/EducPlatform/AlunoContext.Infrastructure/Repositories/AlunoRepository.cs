@@ -12,6 +12,7 @@ public class AlunoRepository : IAlunoRepository
     {
         _context = context;
     }
+    
 
     public async Task Adicionar(Aluno aluno)
     {
