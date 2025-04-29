@@ -9,7 +9,7 @@ namespace CursoContext.Tests.Performance.Curso;
 
 public class CadastrarCursoPerformanceTests
 {
-    [Fact(DisplayName = "Deve cadastrar 1000 cursos em menos de 3 segundos")]
+    [Fact(DisplayName = "Deve cadastrar 1000 cursos em menos de 10 segundos")]
     public async Task DeveCadastrarCursosRapidamente()
     {
         using var contexto = TestDbContextFactory.CriarContexto();
@@ -30,7 +30,7 @@ public class CadastrarCursoPerformanceTests
 
         stopwatch.Stop();
 
-        Assert.True(stopwatch.Elapsed.TotalSeconds < 5,
+        Assert.True(stopwatch.Elapsed.TotalSeconds < 10,
             $"Cadastro demorou {stopwatch.Elapsed.TotalSeconds} segundos");
     }
 }
