@@ -130,5 +130,38 @@ public class RealizarPagamentoTests
         Assert.False(resultado.Sucesso);
         Assert.Contains("aluno não encontrado", resultado.Mensagem.ToLower());
     }
+    [Fact(DisplayName = "Deve falhar se matrícula não encontrada no aluno")]
+    public async Task DeveFalhar_SeMatriculaNaoEncontradaNoAluno()
+    {
+        // Arrange
+        var cursoId = Guid.NewGuid();
+
+        var aluno = new Aluno("Aluno Teste", "teste@email.com", "system");
+        var matricula = new MatriculaBuilder()
+            .ComCurso(cursoId)
+            .Construir();
+
+        aluno.AdicionarMatricula(matricula);
+        _alunoRepositoryFake.AdicionarAluno(aluno);
+
+        var matriculaIdInexistente = Guid.NewGuid(); // matrícula diferente da que o aluno tem
+
+        var comando = new RealizarPagamentoComando
+        {
+            MatriculaId = matriculaIdInexistente,
+            Valor = 500m,
+            NumeroCartao = "1234567890", // termina com 0 (pagamento aprovado, mas matrícula errada)
+            NomeTitular = "Aluno Teste",
+            Validade = "12/29",
+            CVV = "123"
+        };
+
+        // Act
+        var resultado = await _handler.Handle(comando);
+
+        // Assert
+        Assert.False(resultado.Sucesso);
+        Assert.Contains("matrícula não encontrada", resultado.Mensagem.ToLower());
+    }
 
 }
