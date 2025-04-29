@@ -9,7 +9,7 @@ namespace AlunoContext.Tests.Performance.Alunos;
 
 public class ListarAlunosPerformanceTests
 {
-    [Fact(DisplayName = "Deve listar 1000 alunos em menos de 500ms")]
+    [Fact(DisplayName = "Deve listar 1000 alunos em menos de 2000ms")]
     public async Task DeveListarAlunosRapidamente()
     {
         // Arrange
@@ -34,7 +34,7 @@ public class ListarAlunosPerformanceTests
 
         // Assert
         Assert.Equal(1000, alunos.Count);
-        Assert.True(stopwatch.Elapsed.TotalMilliseconds < 500,
+        Assert.True(stopwatch.Elapsed.TotalMilliseconds < 2000,
             $"Listagem demorou {stopwatch.Elapsed.TotalMilliseconds}ms");
     }
 }

@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagamentoContext.Tests.Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PagamentoContext.Tests.Unit", "PagamentoContext.Tests.Unit\PagamentoContext.Tests.Unit.csproj", "{654D3BEE-D986-4A15-B729-4639C0D5BC47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducPlatform.Api", "EducPlatform.Api\EducPlatform.Api.csproj", "{13966F77-632C-4181-873A-B89B75B9F6ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{654D3BEE-D986-4A15-B729-4639C0D5BC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654D3BEE-D986-4A15-B729-4639C0D5BC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654D3BEE-D986-4A15-B729-4639C0D5BC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13966F77-632C-4181-873A-B89B75B9F6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13966F77-632C-4181-873A-B89B75B9F6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13966F77-632C-4181-873A-B89B75B9F6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13966F77-632C-4181-873A-B89B75B9F6ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -188,6 +194,7 @@ Global
 		{8E7C5418-8520-4E1C-A153-D7D0FDCF0EEA} = {3940D7A0-3FF1-4CDC-B2FD-D55FA312E29A}
 		{6A9ACC5D-1A59-4734-BD38-4EB87D660BAB} = {3940D7A0-3FF1-4CDC-B2FD-D55FA312E29A}
 		{654D3BEE-D986-4A15-B729-4639C0D5BC47} = {3940D7A0-3FF1-4CDC-B2FD-D55FA312E29A}
+		{13966F77-632C-4181-873A-B89B75B9F6ED} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E1A6259-E389-40BC-B0CC-90B98C5CE55C}
