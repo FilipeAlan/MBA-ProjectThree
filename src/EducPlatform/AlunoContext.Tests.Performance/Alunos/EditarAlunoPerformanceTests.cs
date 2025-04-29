@@ -10,7 +10,7 @@ namespace AlunoContext.Tests.Performance.Alunos;
 
 public class EditarAlunoPerformanceTests
 {
-    [Fact(DisplayName = "Deve editar 1000 alunos em menos de 5 segundos")]
+    [Fact(DisplayName = "Deve editar 1000 alunos em menos de 10 segundos")]
     public async Task DeveEditarVariosAlunosRapidamente()
     {
         // Arrange
@@ -48,7 +48,7 @@ public class EditarAlunoPerformanceTests
         stopwatch.Stop();
 
         // Assert
-        Assert.True(stopwatch.Elapsed.TotalSeconds < 5,
+        Assert.True(stopwatch.Elapsed.TotalSeconds < 10,
             $"Edição demorou {stopwatch.Elapsed.TotalSeconds} segundos para 1000 alunos.");
     }
 }

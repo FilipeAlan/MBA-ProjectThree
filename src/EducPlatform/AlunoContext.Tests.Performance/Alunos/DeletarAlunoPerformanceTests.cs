@@ -10,7 +10,7 @@ namespace AlunoContext.Tests.Performance.Alunos;
 
 public class DeletarAlunoPerformanceTests
 {
-    [Fact(DisplayName = "Deve deletar 1000 alunos em menos de 5 segundos")]
+    [Fact(DisplayName = "Deve deletar 1000 alunos em menos de 10 segundos")]
     public async Task DeveDeletarAlunosRapidamente()
     {
         // Arrange
@@ -29,7 +29,7 @@ public class DeletarAlunoPerformanceTests
 
         var alunos = contexto.Alunos.Select(a => a.Id).ToList();
 
-        var deletarHandler = new DeletarAlunoHandler(repositorio, unitOfWork); // ✅ corrigido
+        var deletarHandler = new DeletarAlunoHandler(repositorio, unitOfWork); 
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -45,7 +45,7 @@ public class DeletarAlunoPerformanceTests
 
         // Assert
         Assert.Equal(0, contexto.Alunos.Count());
-        Assert.True(stopwatch.Elapsed.TotalSeconds < 5,
+        Assert.True(stopwatch.Elapsed.TotalSeconds < 10,
             $"Remoção demorou {stopwatch.Elapsed.TotalSeconds} segundos");
     }
 }

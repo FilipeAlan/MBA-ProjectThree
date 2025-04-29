@@ -1,4 +1,4 @@
-﻿using CursoContext.Application.Commands.CadastrarCurso;
+using CursoContext.Application.Commands.CadastrarCurso;
 using CursoContext.Infrastructure.Context;
 using CursoContext.Infrastructure.Repositories;
 using CursoContext.Tests.Integration.Shared;
@@ -29,9 +29,10 @@ public class CadastrarCursoPerformanceTests
         }
 
         stopwatch.Stop();
-
+      
         Assert.True(stopwatch.Elapsed.TotalSeconds < 20,
 
-        $"Cadastro demorou {stopwatch.Elapsed.TotalSeconds} segundos");
+            $"Cadastro demorou {stopwatch.Elapsed.TotalSeconds} segundos");
+
     }
 }
