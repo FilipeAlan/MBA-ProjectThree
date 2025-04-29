@@ -1,4 +1,4 @@
-﻿namespace PagamentoContext.Application.Commands;
+﻿namespace PagamentoContext.Applicarion.Commands;
 public class RealizarPagamentoComando
 {
     public Guid MatriculaId { get; set; }

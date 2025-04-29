@@ -6,7 +6,7 @@ using PagamentoContext.Domain.Enums;
 using PagamentoContext.Domain.Repositories;
 using PagamentoContext.Domain.ValueObjects;
 
-namespace PagamentoContext.Application.Commands;
+namespace PagamentoContext.Applicarion.Commands;
 
 public class RealizarPagamentoHandler
 {

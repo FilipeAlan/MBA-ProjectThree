@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PagamentoContext.Domain.Aggregates;
 
-namespace PagamentoContext.Infrastructure.Context.Mappings;
+namespace PagamentoContext.Infrastructure.Mappings;
 
 public class PagamentoMap : IEntityTypeConfiguration<Pagamento>
 {
