@@ -161,7 +161,31 @@ public class RealizarPagamentoTests
 
         // Assert
         Assert.False(resultado.Sucesso);
-        Assert.Contains("matrícula não encontrada", resultado.Mensagem.ToLower());
+        Assert.Contains("aluno não encontrado para a matrícula informada.", resultado.Mensagem.ToLower());
+    }
+    [Fact(DisplayName = "Deve falhar se dados do cartão forem inválidos")]
+    public async Task DeveFalhar_SeDadosCartaoForemInvalidos()
+    {
+        // Arrange
+        var comando = new RealizarPagamentoComando
+        {
+            MatriculaId = Guid.NewGuid(),
+            Valor = 500m,
+            NumeroCartao = "", // <- Número vazio (inválido)
+            NomeTitular = "",  // <- Nome vazio (inválido)
+            Validade = "",     // <- Validade vazia (inválido)
+            CVV = ""           // <- CVV vazio (inválido)
+        };
+
+        // Act
+        var resultado = await _handler.Handle(comando);
+
+        // Assert
+        Assert.False(resultado.Sucesso);
+        Assert.Contains("dados do cartão são obrigatórios", resultado.Mensagem.ToLower());
+
+        // Extra: garantir que nada foi adicionado no pagamento
+        Assert.Empty(_pagamentoRepositoryFake.Pagamentos);
     }
 
 }
