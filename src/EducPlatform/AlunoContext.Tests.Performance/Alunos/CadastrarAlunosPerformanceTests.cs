@@ -9,7 +9,7 @@ namespace AlunoContext.Tests.Performance.Alunos;
 
 public class CadastrarAlunosPerformanceTests
 {
-    [Fact(DisplayName = "Deve cadastrar 1000 alunos em menos de 5 segundos")]
+    [Fact(DisplayName = "Deve cadastrar 1000 alunos em menos de 10 segundos")]
     public async Task DeveCadastrarAlunosRapidamente()
     {
         // Arrange
