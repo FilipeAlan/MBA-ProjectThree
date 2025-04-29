@@ -130,5 +130,62 @@ public class RealizarPagamentoTests
         Assert.False(resultado.Sucesso);
         Assert.Contains("aluno não encontrado", resultado.Mensagem.ToLower());
     }
+    [Fact(DisplayName = "Deve falhar se matrícula não encontrada no aluno")]
+    public async Task DeveFalhar_SeMatriculaNaoEncontradaNoAluno()
+    {
+        // Arrange
+        var cursoId = Guid.NewGuid();
+
+        var aluno = new Aluno("Aluno Teste", "teste@email.com", "system");
+        var matricula = new MatriculaBuilder()
+            .ComCurso(cursoId)
+            .Construir();
+
+        aluno.AdicionarMatricula(matricula);
+        _alunoRepositoryFake.AdicionarAluno(aluno);
+
+        var matriculaIdInexistente = Guid.NewGuid(); // matrícula diferente da que o aluno tem
+
+        var comando = new RealizarPagamentoComando
+        {
+            MatriculaId = matriculaIdInexistente,
+            Valor = 500m,
+            NumeroCartao = "1234567890", // termina com 0 (pagamento aprovado, mas matrícula errada)
+            NomeTitular = "Aluno Teste",
+            Validade = "12/29",
+            CVV = "123"
+        };
+
+        // Act
+        var resultado = await _handler.Handle(comando);
+
+        // Assert
+        Assert.False(resultado.Sucesso);
+        Assert.Contains("aluno não encontrado para a matrícula informada.", resultado.Mensagem.ToLower());
+    }
+    [Fact(DisplayName = "Deve falhar se dados do cartão forem inválidos")]
+    public async Task DeveFalhar_SeDadosCartaoForemInvalidos()
+    {
+        // Arrange
+        var comando = new RealizarPagamentoComando
+        {
+            MatriculaId = Guid.NewGuid(),
+            Valor = 500m,
+            NumeroCartao = "", // <- Número vazio (inválido)
+            NomeTitular = "",  // <- Nome vazio (inválido)
+            Validade = "",     // <- Validade vazia (inválido)
+            CVV = ""           // <- CVV vazio (inválido)
+        };
+
+        // Act
+        var resultado = await _handler.Handle(comando);
+
+        // Assert
+        Assert.False(resultado.Sucesso);
+        Assert.Contains("dados do cartão são obrigatórios", resultado.Mensagem.ToLower());
+
+        // Extra: garantir que nada foi adicionado no pagamento
+        Assert.Empty(_pagamentoRepositoryFake.Pagamentos);
+    }
 
 }
