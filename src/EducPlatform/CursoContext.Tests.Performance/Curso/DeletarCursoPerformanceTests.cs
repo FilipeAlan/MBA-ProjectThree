@@ -21,7 +21,7 @@ public class DeletarCursoPerformanceTests
         var cadastrarHandler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
 
         for (int i = 0; i < 1000; i++)
-            await cadastrarHandler.Handle(new CadastrarCursoComando($"Curso {i}", "Descricao"));
+            await cadastrarHandler.Handle(new CadastrarCursoComando($"Curso {i}", "Descricao"), CancellationToken.None);
 
         var cursos = contexto.Cursos.ToList();
         var deletarHandler = new DeletarCursoHandler(repositorio, unitOfWork);
@@ -29,7 +29,7 @@ public class DeletarCursoPerformanceTests
         var stopwatch = Stopwatch.StartNew();
 
         foreach (var curso in cursos)
-            await deletarHandler.Handle(new DeletarCursoComando(curso.Id));
+            await deletarHandler.Handle(new DeletarCursoComando(curso.Id),CancellationToken.None);
 
         stopwatch.Stop();
 

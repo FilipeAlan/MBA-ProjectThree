@@ -1,29 +1,29 @@
 ﻿using CursoContext.Domain.Repositories;
 using BuildingBlocks.Common;
 using BuildingBlocks.Results;
+using MediatR;
 
 namespace CursoContext.Application.Commands.DeletarCurso;
 
-public class DeletarCursoHandler
+public class DeletarCursoHandler : IRequestHandler<DeletarCursoComando, Result>
 {
-    private readonly ICursoRepository _repositorio;
+    private readonly ICursoRepository _cursoRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeletarCursoHandler(
-        ICursoRepository repositorio,
-        IUnitOfWork unitOfWork)
+    public DeletarCursoHandler(ICursoRepository cursoRepository, IUnitOfWork unitOfWork)
     {
-        _repositorio = repositorio;
+        _cursoRepository = cursoRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result> Handle(DeletarCursoComando comando)
+    public async Task<Result> Handle(DeletarCursoComando comando, CancellationToken cancellationToken)
     {
-        var curso = await _repositorio.ObterPorId(comando.Id);
-        if (curso is null)
+        var curso = await _cursoRepository.ObterPorId(comando.Id);
+
+        if (curso == null)
             return Result.Fail("Curso não encontrado.");
 
-        await _repositorio.Excluir(curso);
+        await _cursoRepository.Excluir(curso);
         await _unitOfWork.Commit();
 
         return Result.Ok("Curso removido com sucesso.");

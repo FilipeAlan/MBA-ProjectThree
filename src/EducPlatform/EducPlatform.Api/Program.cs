@@ -110,12 +110,27 @@ app.UseAuthorization();
 app.MapControllers();
 
 // ============================================
-// Criação automática do banco de dados Identity
+// Criação automática do banco e da role admin
 // ============================================
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
-    context.Database.Migrate();
+    await context.Database.MigrateAsync();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Usuario>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+    var email = "admin@admin.com";
+    var user = await userManager.FindByEmailAsync(email);
+
+    if (user != null && !await userManager.IsInRoleAsync(user, "admin"))
+    {
+        if (!await roleManager.RoleExistsAsync("admin"))
+            await roleManager.CreateAsync(new IdentityRole<Guid>("admin"));
+
+        await userManager.AddToRoleAsync(user, "admin");
+    }
 }
 
 await app.RunAsync();

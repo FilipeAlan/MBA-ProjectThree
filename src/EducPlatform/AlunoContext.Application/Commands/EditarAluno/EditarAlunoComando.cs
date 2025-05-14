@@ -1,6 +1,10 @@
-﻿namespace AlunoContext.Application.Commands.EditarAluno;
+﻿
+using BuildingBlocks.Results;
+using MediatR;
 
-public class EditarAlunoComando
+namespace AlunoContext.Application.Commands.EditarAluno;
+
+public class EditarAlunoComando : IRequest<Result>
 {
     public Guid Id { get; }
     public string Nome { get; }

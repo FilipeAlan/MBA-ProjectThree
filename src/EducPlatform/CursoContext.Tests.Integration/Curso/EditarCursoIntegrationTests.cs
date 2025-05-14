@@ -20,14 +20,14 @@ public class EditarCursoIntegrationTests
 
 
         var cadastrarHandler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
-        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso Antigo", "Descrição antiga"));
+        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso Antigo", "Descrição antiga"), CancellationToken.None);
 
         var curso = contexto.Cursos.First();
-        var editarHandler = new EditarCursoHandler(repositorio, unitOfWork, usuario);
+        var editarHandler = new EditarCursoHandler(repositorio, usuario, unitOfWork);
         var comando = new EditarCursoComando(curso.Id, "Curso Atualizado", "Nova descrição");
 
         // Act
-        var resultado = await editarHandler.Handle(comando);
+        var resultado = await editarHandler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);

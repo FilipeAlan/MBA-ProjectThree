@@ -34,7 +34,7 @@ public class EditarAlunoTests
         var comando = new EditarAlunoComando(aluno.Id, "Depois", "depois@email.com");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);
@@ -50,7 +50,7 @@ public class EditarAlunoTests
         var comando = new EditarAlunoComando(Guid.NewGuid(), "Novo Nome", "novo@email.com");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);

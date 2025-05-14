@@ -1,8 +1,11 @@
-﻿namespace CursoContext.Application.Commands.DeletarCurso;
+﻿using BuildingBlocks.Results;
+using MediatR;
 
-public class DeletarCursoComando
+namespace CursoContext.Application.Commands.DeletarCurso;
+
+public class DeletarCursoComando : IRequest<Result>
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
 
     public DeletarCursoComando(Guid id)
     {

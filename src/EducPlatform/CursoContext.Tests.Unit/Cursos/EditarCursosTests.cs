@@ -18,7 +18,7 @@ public class EditarCursoTests
         _repositorio = new CursoRepositorioFake();
         _usuario = new UsuarioContextoFake();
         _unitOfWork = new UnitOfWorkFake();
-        _handler = new EditarCursoHandler(_repositorio, _unitOfWork, _usuario);
+        _handler = new EditarCursoHandler(_repositorio, _usuario, _unitOfWork);
     }
 
     [Fact(DisplayName = "Deve editar curso quando os dados forem válidos")]
@@ -31,7 +31,7 @@ public class EditarCursoTests
         var comando = new EditarCursoComando(curso.Id, "Curso Novo", "Nova descrição");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);
@@ -47,7 +47,7 @@ public class EditarCursoTests
     {
         var comando = new EditarCursoComando(Guid.NewGuid(), "Curso", "Descrição");
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("curso não encontrado", resultado.Mensagem.ToLower());
@@ -61,7 +61,7 @@ public class EditarCursoTests
 
         var comando = new EditarCursoComando(curso.Id, "", "Nova descrição");
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("nome", resultado.Mensagem.ToLower());
@@ -75,7 +75,7 @@ public class EditarCursoTests
 
         var comando = new EditarCursoComando(curso.Id, "Novo Nome", "");
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("descrição", resultado.Mensagem.ToLower());

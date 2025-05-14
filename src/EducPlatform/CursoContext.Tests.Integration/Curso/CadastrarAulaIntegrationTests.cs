@@ -20,17 +20,15 @@ public class CadastrarAulaIntegrationTests
 
             // 1. Criar o curso
             var cursoHandler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
-            var resultadoCurso = await cursoHandler.Handle(new CadastrarCursoComando("Curso de TDD", "Aprenda TDD"));
+            var resultadoCurso = await cursoHandler.Handle(new CadastrarCursoComando("Curso de TDD", "Aprenda TDD"),CancellationToken.None);
             Assert.True(resultadoCurso.Sucesso);
 
-            // 2. Buscar o curso pelo repositório
-            var curso = (await repositorio.Listar())
-                .First(c => c.Nome == "Curso de TDD");
-            var cursoId = curso.Id;
 
-            // 3. Cadastrar a aula
+            var cursoId = resultadoCurso.Dados;
+
+            // 2. Cadastrar a aula
             var aulaHandler = new CadastrarAulaHandler(repositorio, usuario, unitOfWork);
-            var resultadoAula = await aulaHandler.Handle(new CadastrarAulaComando(cursoId, "Aula 01", "Conteúdo de TDD"));
+            var resultadoAula = await aulaHandler.Handle(new CadastrarAulaComando(cursoId, "Aula 01", "Conteúdo de TDD"),CancellationToken.None);
             Assert.True(resultadoAula.Sucesso);
 
           
@@ -44,5 +42,4 @@ public class CadastrarAulaIntegrationTests
             Assert.Equal("Aula 01", cursoAtualizado.Aulas.FirstOrDefault()?.Titulo);
         }
     }
-
 }

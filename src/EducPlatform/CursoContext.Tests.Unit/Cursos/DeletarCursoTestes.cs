@@ -18,7 +18,7 @@ public class DeletarCursoTests
         var handler = new DeletarCursoHandler(repositorio, unitOfWork);
         var comando = new DeletarCursoComando(curso.Id);
 
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         Assert.True(resultado.Sucesso);
         Assert.Empty(repositorio.Cursos);
@@ -32,7 +32,7 @@ public class DeletarCursoTests
         var handler = new DeletarCursoHandler(repositorio, unitOfWork);
         var comando = new DeletarCursoComando(Guid.NewGuid());
 
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("curso não encontrado", resultado.Mensagem.ToLower());

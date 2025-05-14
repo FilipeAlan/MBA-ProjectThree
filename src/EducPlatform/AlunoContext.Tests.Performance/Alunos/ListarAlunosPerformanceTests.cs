@@ -21,7 +21,7 @@ public class ListarAlunosPerformanceTests
 
         for (int i = 0; i < 1000; i++)
         {
-            await handler.Handle(new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com"));
+            await handler.Handle(new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com"), CancellationToken.None);
         }
 
         var stopwatch = new Stopwatch();

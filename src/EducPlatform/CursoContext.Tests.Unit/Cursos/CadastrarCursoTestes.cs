@@ -27,7 +27,7 @@ public class CadastrarCursoTests
         var comando = new CadastrarCursoComando("Curso de TDD", "Aprenda a testar antes de codar");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);
@@ -42,7 +42,7 @@ public class CadastrarCursoTests
         var comando = new CadastrarCursoComando("", "Descrição válida");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando,CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);
@@ -56,7 +56,7 @@ public class CadastrarCursoTests
         var comando = new CadastrarCursoComando("Curso válido", "");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);

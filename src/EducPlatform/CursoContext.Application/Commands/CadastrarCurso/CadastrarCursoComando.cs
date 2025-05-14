@@ -1,12 +1,15 @@
-﻿namespace CursoContext.Application.Commands.CadastrarCurso;
+﻿using BuildingBlocks.Results;
+using MediatR;
 
-    public class CadastrarCursoComando
+namespace CursoContext.Application.Commands.CadastrarCurso;
+
+public class CadastrarCursoComando : IRequest<ResultGeneric<Guid>>
+{
+    public string Nome { get;private set; }
+    public string Descricao { get;private set; }
+    public CadastrarCursoComando(string nome,string descricao)
     {
-        public string Nome { get; }
-        public string Descricao { get; }
-        public CadastrarCursoComando(string nome, string descricao)
-        {
-            Nome = nome;
-            Descricao = descricao;
-        }
+        Nome = nome;
+        Descricao = descricao;
     }
+}

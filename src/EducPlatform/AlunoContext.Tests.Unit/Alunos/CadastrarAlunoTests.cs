@@ -27,7 +27,7 @@ public class CadastrarAlunoTests
         var comando = GeradorDeComando.CriarAlunoValido();
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);
@@ -42,7 +42,7 @@ public class CadastrarAlunoTests
         var comando = GeradorDeComando.CriarAlunoComNomeVazio();
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);
@@ -57,7 +57,7 @@ public class CadastrarAlunoTests
         var comando = GeradorDeComando.CriarAlunoComEmailInvalido();
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);

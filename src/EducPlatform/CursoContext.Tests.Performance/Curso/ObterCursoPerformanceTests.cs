@@ -19,7 +19,7 @@ public class ObterCursoPerformanceTests
         var unitOfWork = new UnitOfWork(contexto);
         var handler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
 
-        await handler.Handle(new CadastrarCursoComando("Curso Rápido", "Performance"));
+        await handler.Handle(new CadastrarCursoComando("Curso Rápido", "Performance"), CancellationToken.None);
         var curso = contexto.Cursos.First();
 
         var stopwatch = Stopwatch.StartNew();

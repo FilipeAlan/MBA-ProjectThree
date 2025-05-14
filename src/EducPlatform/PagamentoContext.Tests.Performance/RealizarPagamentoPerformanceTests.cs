@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PagamentoContext.Domain.Aggregates;
 using PagamentoContext.Infrastructure.Context;
 
-namespace PagamentoContext.Tests.Performance.Pagamentos;
+namespace PagamentoContext.Tests.Performance;
 
 public class RealizarPagamentoPerformanceTests
 {

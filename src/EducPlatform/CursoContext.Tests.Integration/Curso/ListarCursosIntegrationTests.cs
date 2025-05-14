@@ -19,8 +19,8 @@ public class ListarCursosIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
 
         var cadastrarHandler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
-        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso A", "Descrição A"));
-        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso B", "Descrição B"));
+        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso A", "Descrição A"), CancellationToken.None);
+        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso B", "Descrição B"), CancellationToken.None);
 
         var listarHandler = new ListarCursosHandler(repositorio);
 
