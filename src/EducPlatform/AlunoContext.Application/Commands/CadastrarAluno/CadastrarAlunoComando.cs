@@ -1,6 +1,9 @@
-﻿namespace AlunoContext.Application.Commands.CadastrarAluno;
+﻿using BuildingBlocks.Results;
+using MediatR;
 
-public class CadastrarAlunoComando
+namespace AlunoContext.Application.Commands.CadastrarAluno;
+
+public class CadastrarAlunoComando : IRequest<ResultGeneric<Guid>>
 {
     public string Nome { get; }
     public string Email { get; }

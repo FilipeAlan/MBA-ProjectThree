@@ -3,6 +3,7 @@ using AlunoContext.Domain.Entities;
 using PagamentoContext.Applicarion.Commands;
 using PagamentoContext.Domain.Enums;
 using PagamentoContext.Tests.Shared.Builders;
+using PagamentoContext.Tests.Shared.Fakes;
 using PagamentoContext.Tests.Unit.Fakes;
 
 namespace PagamentoContext.Tests.Unit.Pagamentos;

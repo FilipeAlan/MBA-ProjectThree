@@ -1,11 +1,15 @@
-﻿namespace AlunoContext.Application.Commands.DeletarAluno;
+﻿
+using BuildingBlocks.Results;
+using MediatR;
 
-    public class DeletarAlunoComando
+namespace AlunoContext.Application.Commands.DeletarAluno;
+
+public class DeletarAlunoComando : IRequest<Result>
+{
+    public Guid Id { get; }
+
+    public DeletarAlunoComando(Guid id)
     {
-        public Guid Id { get; }
-        public DeletarAlunoComando(Guid id)
-        {
-            Id = id;
-        }
+        Id = id;
     }
-
+}

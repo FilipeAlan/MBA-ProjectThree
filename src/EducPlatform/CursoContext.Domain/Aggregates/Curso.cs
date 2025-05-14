@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Common;
+using BuildingBlocks.Results;
 using CursoContext.Domain.Entities;
 using CursoContext.Domain.ValueObjects;
 
@@ -18,11 +19,18 @@ public class Curso : EntityBase
         Conteudo = conteudo;
     }
 
-    public void AdicionarAula(string titulo, string conteudo, string usuario)
+    public ResultGeneric<Aula> AdicionarAula(string titulo, string conteudo, string usuario)
     {
+        if (string.IsNullOrWhiteSpace(titulo))
+            return ResultGeneric<Aula>.Fail("Título da aula não pode ser vazio.");
+
+        if (string.IsNullOrWhiteSpace(conteudo))
+            return ResultGeneric<Aula>.Fail("Conteúdo da aula não pode ser vazio.");
+
         var aula = new Aula(titulo, conteudo, usuario);
         Aulas.Add(aula);
-        Atualizar(usuario);
+
+        return ResultGeneric<Aula>.Ok(aula);
     }
 
     public void Atualizar(string novoNome, ConteudoProgramatico novoConteudo, string usuario)

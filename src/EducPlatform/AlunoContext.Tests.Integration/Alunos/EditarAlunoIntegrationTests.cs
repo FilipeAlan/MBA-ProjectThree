@@ -19,14 +19,14 @@ public class EditarAlunoIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
         var comandoCadastro = new CadastrarAlunoComando("Filipe", "filipe@email.com");
-        await cadastrarHandler.Handle(comandoCadastro);
+        await cadastrarHandler.Handle(comandoCadastro,CancellationToken.None);
         var aluno = contexto.Alunos.First();
 
         var editarHandler = new EditarAlunoHandler(repositorio, usuario, unitOfWork);
         var comandoEdicao = new EditarAlunoComando(aluno.Id, "Novo Nome", "novo@email.com");
 
         // Act
-        var resultado = await editarHandler.Handle(comandoEdicao);
+        var resultado = await editarHandler.Handle(comandoEdicao, CancellationToken.None);
         var alunoEditado = contexto.Alunos.First();
 
         // Assert

@@ -1,15 +1,17 @@
-﻿namespace CursoContext.Application.Commands.EditarCurso;
+﻿using MediatR;
+using BuildingBlocks.Results;
 
-public class EditarCursoComando
+namespace CursoContext.Application.Commands.EditarCurso;
+
+public class EditarCursoComando : IRequest<Result>
 {
-    public Guid Id { get; }
-    public string NovoNome { get; }
-    public string NovaDescricao { get; }
-
-    public EditarCursoComando(Guid id, string novoNome, string novaDescricao)
+    public Guid Id { get; set; }
+    public string Nome { get; set; }
+    public string Descricao { get; set; }
+    public EditarCursoComando(Guid id ,string nome,string decricao)
     {
         Id = id;
-        NovoNome = novoNome;
-        NovaDescricao = novaDescricao;
+        Nome = nome;
+        Descricao = decricao;
     }
 }

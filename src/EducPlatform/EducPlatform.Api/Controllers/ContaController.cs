@@ -3,7 +3,6 @@ using EducPlatform.Api.Dtos;
 using EducPlatform.Api.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace EducPlatform.Api.Controllers
 {
@@ -45,7 +44,9 @@ namespace EducPlatform.Api.Controllers
             return Ok(new { message = "Usuário registrado com sucesso!" });
         }
 
-        [HttpPost("login")]
+        [HttpPost]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login([FromBody] LoginUsuarioRequest request)
         {
             if (!ModelState.IsValid)

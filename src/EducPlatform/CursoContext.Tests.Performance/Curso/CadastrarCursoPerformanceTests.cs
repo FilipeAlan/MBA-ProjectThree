@@ -25,7 +25,7 @@ public class CadastrarCursoPerformanceTests
         for (int i = 0; i < 1000; i++)
         {
             var comando = new CadastrarCursoComando($"Curso {i}", $"Descrição do curso {i}");
-            await handler.Handle(comando);
+            await handler.Handle(comando, CancellationToken.None);
         }
 
         stopwatch.Stop();

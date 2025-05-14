@@ -19,7 +19,7 @@ public class ObterAlunoPorIdIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
 
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
-        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
+        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"), CancellationToken.None);
         var alunoCriado = contexto.Alunos.First();
 
         var obterHandler = new ObterAlunoHandler(repositorio);

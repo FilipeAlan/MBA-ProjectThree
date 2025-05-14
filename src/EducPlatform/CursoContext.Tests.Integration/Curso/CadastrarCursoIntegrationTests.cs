@@ -21,7 +21,7 @@ public class CadastrarCursoIntegrationTests
         var comando = new CadastrarCursoComando("Curso de TDD", "Aprenda a testar antes de codar");
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);

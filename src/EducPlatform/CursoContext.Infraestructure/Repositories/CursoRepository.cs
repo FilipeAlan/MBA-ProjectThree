@@ -14,22 +14,19 @@ public class CursoRepository : ICursoRepository
     {
         _context = context;
     }
-    public Task AdicionarAula(Aula aula)
+    public async Task AdicionarAula(Aula aula)
     {
-        _context.Aulas.Add(aula);
-        return Task.CompletedTask;
+        await _context.Aulas.AddAsync(aula);        
     }
     public async Task Adicionar(Curso curso)
     {
         await _context.Cursos.AddAsync(curso);
     }
-
     public Task Atualizar(Curso curso)
-    {
-        _context.Entry(curso).State = EntityState.Modified;
+    {        
+        _context.Cursos.Update(curso);
         return Task.CompletedTask;
     }
-
     public Task Excluir(Curso curso)
     {
         _context.Cursos.Remove(curso);
@@ -40,20 +37,17 @@ public class CursoRepository : ICursoRepository
     {
         var curso = await _context.Cursos
             .Include(c => c.Aulas)
-            .FirstOrDefaultAsync(c => c.Id == id);
-
-        if (curso != null)
-        {
-            _context.Attach(curso);
-        }
+            .FirstOrDefaultAsync(c => c.Id == id);        
 
         return curso;
     }
 
     public async Task<List<Curso>> Listar()
-    {
+    {        
+
         return await _context.Cursos
             .Include(c => c.Aulas)
+            .AsNoTracking()
             .ToListAsync();
     }
 }

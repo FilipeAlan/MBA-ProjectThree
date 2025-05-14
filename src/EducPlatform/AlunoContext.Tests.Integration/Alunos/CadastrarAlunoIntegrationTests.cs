@@ -21,7 +21,7 @@ public class CadastrarAlunoIntegrationTests
         var comando = new CadastrarAlunoComando("Filipe", "filipe@email.com");
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);

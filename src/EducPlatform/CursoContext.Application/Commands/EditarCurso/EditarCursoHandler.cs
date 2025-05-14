@@ -1,43 +1,43 @@
-﻿using CursoContext.Domain.Repositories;
-using CursoContext.Domain.ValueObjects;
-using BuildingBlocks.Common;
+﻿using BuildingBlocks.Common;
 using BuildingBlocks.Results;
+using CursoContext.Domain.Repositories;
+using CursoContext.Domain.ValueObjects;
+using MediatR;
 
 namespace CursoContext.Application.Commands.EditarCurso;
 
-public class EditarCursoHandler
+public class EditarCursoHandler : IRequestHandler<EditarCursoComando, Result>
 {
-    private readonly ICursoRepository _repositorio;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICursoRepository _cursoRepository;
     private readonly IUsuarioContexto _usuarioContexto;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public EditarCursoHandler(
-        ICursoRepository repositorio,
-        IUnitOfWork unitOfWork,
-        IUsuarioContexto usuarioContexto)
+    public EditarCursoHandler(ICursoRepository cursoRepository, IUsuarioContexto usuarioContexto, IUnitOfWork unitOfWork)
     {
-        _repositorio = repositorio;
-        _unitOfWork = unitOfWork;
+        _cursoRepository = cursoRepository;
         _usuarioContexto = usuarioContexto;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result> Handle(EditarCursoComando comando)
+    public async Task<Result> Handle(EditarCursoComando comando, CancellationToken cancellationToken)
     {
-        var curso = await _repositorio.ObterPorId(comando.Id);
+        var curso = await _cursoRepository.ObterPorId(comando.Id);
+
         if (curso is null)
             return Result.Fail("Curso não encontrado.");
 
-        if (string.IsNullOrWhiteSpace(comando.NovoNome))
+        if (string.IsNullOrWhiteSpace(comando.Nome))
             return Result.Fail("O nome do curso é obrigatório.");
 
-        if (string.IsNullOrWhiteSpace(comando.NovaDescricao))
+        if (string.IsNullOrWhiteSpace(comando.Descricao))
             return Result.Fail("A descrição do curso é obrigatória.");
 
-        var novoConteudo = new ConteudoProgramatico(comando.NovaDescricao, curso.Conteudo.Objetivos);
-        curso.Atualizar(comando.NovoNome, novoConteudo, _usuarioContexto.ObterUsuario());
+        curso.Atualizar(comando.Nome, new ConteudoProgramatico(comando.Descricao, ""), _usuarioContexto.ObterUsuario());
 
+        await _cursoRepository.Atualizar(curso);
         await _unitOfWork.Commit();
 
-        return Result.Ok("Curso editado com sucesso.");
+        return Result.Ok("Curso atualizado com sucesso.");
     }
+
 }

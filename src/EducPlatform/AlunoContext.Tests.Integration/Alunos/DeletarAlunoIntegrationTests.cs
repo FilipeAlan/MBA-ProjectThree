@@ -19,7 +19,7 @@ public class DeletarAlunoIntegrationTests
         var usuario = new UsuarioContextoFake();
 
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork); // se o handler de cadastrar também tiver unitOfWork
-        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"));
+        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"),CancellationToken.None);
 
         var aluno = contexto.Alunos.First();
 

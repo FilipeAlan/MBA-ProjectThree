@@ -24,7 +24,7 @@ public class DeletarAlunoPerformanceTests
         for (int i = 0; i < 1000; i++)
         {
             var comando = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
-            await cadastrarHandler.Handle(comando);
+            await cadastrarHandler.Handle(comando, CancellationToken.None);
         }
 
         var alunos = contexto.Alunos.Select(a => a.Id).ToList();

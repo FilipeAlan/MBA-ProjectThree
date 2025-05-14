@@ -21,17 +21,17 @@ public class EditarCursoPerformanceTests
         var cadastrarHandler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
 
         for (int i = 0; i < 1000; i++)
-            await cadastrarHandler.Handle(new CadastrarCursoComando($"Curso {i}", "Descricao"));
+            await cadastrarHandler.Handle(new CadastrarCursoComando($"Curso {i}", "Descricao"), CancellationToken.None);
 
         var cursos = contexto.Cursos.ToList();
-        var editarHandler = new EditarCursoHandler(repositorio, unitOfWork, usuario);
+        var editarHandler = new EditarCursoHandler(repositorio, usuario, unitOfWork);
         var stopwatch = Stopwatch.StartNew();
 
         // aaa Act
         foreach (var curso in cursos)
         {
             var comando = new EditarCursoComando(curso.Id, curso.Nome + " Editado", "Nova Descricao");
-            await editarHandler.Handle(comando);
+            await editarHandler.Handle(comando, CancellationToken.None);
         }
 
         stopwatch.Stop();

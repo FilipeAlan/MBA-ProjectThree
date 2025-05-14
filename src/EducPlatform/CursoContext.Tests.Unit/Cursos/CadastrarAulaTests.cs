@@ -30,7 +30,7 @@ public class CadastrarAulaTests
         var comando = new CadastrarAulaComando(curso.Id, "Título da Aula", "Conteúdo da Aula");
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando,CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso); 
@@ -49,7 +49,7 @@ public class CadastrarAulaTests
     {
         var comando = new CadastrarAulaComando(Guid.NewGuid(), "Título", "Conteúdo");
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("curso não encontrado", resultado.Mensagem.ToLower());
@@ -63,7 +63,7 @@ public class CadastrarAulaTests
 
         var comando = new CadastrarAulaComando(curso.Id, "", "Conteúdo");
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("título", resultado.Mensagem.ToLower());
@@ -77,7 +77,7 @@ public class CadastrarAulaTests
 
         var comando = new CadastrarAulaComando(curso.Id, "Título", "");
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.False(resultado.Sucesso);
         Assert.Contains("conteúdo", resultado.Mensagem.ToLower());

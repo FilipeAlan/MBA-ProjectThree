@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Common;
 
-namespace PagamentoContext.Tests.Unit.Fakes;
+namespace PagamentoContext.Tests.Shared.Fakes;
 
 public class UnitOfWorkFake : IUnitOfWork
 {

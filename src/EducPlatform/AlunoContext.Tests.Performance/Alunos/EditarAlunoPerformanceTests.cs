@@ -24,7 +24,7 @@ public class EditarAlunoPerformanceTests
         for (int i = 0; i < 1000; i++)
         {
             var comandoCadastro = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
-            await cadastrarHandler.Handle(comandoCadastro);
+            await cadastrarHandler.Handle(comandoCadastro, CancellationToken.None);
         }
 
         var alunos = contexto.Alunos.ToList();
@@ -42,7 +42,7 @@ public class EditarAlunoPerformanceTests
                 aluno.Email.Replace("@", ".editado@")
             );
 
-            await editarHandler.Handle(comandoEdicao);
+            await editarHandler.Handle(comandoEdicao, CancellationToken.None);
         }
 
         stopwatch.Stop();

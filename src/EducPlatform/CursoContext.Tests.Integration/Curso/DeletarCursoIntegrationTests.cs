@@ -19,14 +19,14 @@ public class DeletarCursoIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
 
         var cadastrarHandler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
-        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso de TDD", "Aprenda TDD"));       
+        await cadastrarHandler.Handle(new CadastrarCursoComando("Curso de TDD", "Aprenda TDD"),CancellationToken.None);       
 
         var curso = contexto.Cursos.First();
 
         var deletarHandler = new DeletarCursoHandler(repositorio, unitOfWork);
 
         // Act
-        var resultado = await deletarHandler.Handle(new DeletarCursoComando(curso.Id));
+        var resultado = await deletarHandler.Handle(new DeletarCursoComando(curso.Id),CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);

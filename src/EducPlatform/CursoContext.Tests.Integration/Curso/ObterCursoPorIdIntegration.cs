@@ -18,7 +18,7 @@ public class ObterCursoPorIdIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
         var handler = new CadastrarCursoHandler(repositorio, usuario, unitOfWork);
 
-        await handler.Handle(new CadastrarCursoComando("Curso A", "Descrição A"));
+        await handler.Handle(new CadastrarCursoComando("Curso A", "Descrição A"), CancellationToken.None);
 
         var cursoId = contexto.Cursos.First().Id;
 
