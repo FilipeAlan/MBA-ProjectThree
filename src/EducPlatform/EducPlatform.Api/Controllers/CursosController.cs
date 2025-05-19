@@ -1,4 +1,6 @@
-﻿using BuildingBlocks.Results;
+﻿namespace EducPlatform.Api.Controllers;
+
+using BuildingBlocks.Results;
 using CursoContext.Application.Commands.CadastrarAula;
 using CursoContext.Application.Commands.CadastrarCurso;
 using CursoContext.Application.Commands.DeletarCurso;
@@ -7,12 +9,12 @@ using CursoContext.Application.Dto;
 using CursoContext.Application.Queries.ListarCurso;
 using CursoContext.Application.Queries.ObterCurso;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-namespace EducPlatform.Api.Controllers;
 
 [ApiController]
 [Route("cursos")]
+[Authorize(Roles = "admin")]
 public class CursosController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -23,7 +25,6 @@ public class CursosController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(List<ListarCursosDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Listar()
     {
         var resultado = await _mediator.Send(new ListarCursosQuery());
@@ -31,8 +32,6 @@ public class CursosController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ObterCursoDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ObterPorId(Guid id)
     {
         var resultado = await _mediator.Send(new ObterCursoPorIdQuery(id));
@@ -40,8 +39,6 @@ public class CursosController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(ResultGeneric<Guid>), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Cadastrar(CadastrarCursoComando comando)
     {
         var resultado = await _mediator.Send(comando);
@@ -51,20 +48,14 @@ public class CursosController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Editar(Guid id, EditarCursoComando comando)
     {
-        if (id != comando.Id)
-            return BadRequest("ID do curso não confere.");
-
+        if (id != comando.Id) return BadRequest("ID do curso não confere.");
         var resultado = await _mediator.Send(comando);
         return resultado.Sucesso ? Ok(resultado) : BadRequest(resultado);
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Deletar(Guid id)
     {
         var resultado = await _mediator.Send(new DeletarCursoComando(id));
@@ -72,14 +63,11 @@ public class CursosController : ControllerBase
     }
 
     [HttpPost("{id}/aulas")]
-    [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CadastrarAula(Guid id, CadastrarAulaComando comando)
     {
-        if (id != comando.CursoId)
-            return BadRequest("ID do curso não confere.");
-
+        if (id != comando.CursoId) return BadRequest("ID do curso não confere.");
         var resultado = await _mediator.Send(comando);
         return resultado.Sucesso ? Ok(resultado) : BadRequest(resultado);
     }
 }
+
