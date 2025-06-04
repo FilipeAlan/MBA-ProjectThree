@@ -18,7 +18,7 @@ public class EditarAlunoIntegrationTests
         var usuario = new UsuarioContextoFake();
         var unitOfWork = new UnitOfWork(contexto);
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
-        var comandoCadastro = new CadastrarAlunoComando("Filipe", "filipe@email.com");
+        var comandoCadastro = new CadastrarAlunoComando(Guid.NewGuid(), "Filipe", "filipe@email.com");
         await cadastrarHandler.Handle(comandoCadastro,CancellationToken.None);
         var aluno = contexto.Alunos.First();
 

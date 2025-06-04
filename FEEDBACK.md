@@ -6,6 +6,7 @@
   - Uso de um `SharedKernel` para abstrações comuns (`Entity`, `IAggregateRoot`, etc.), facilitando reutilização sem acoplamento excessivo.
   - Projeto `.sln` bem estruturado e pastas com responsabilidades bem definidas.
 
+✅Corrigido
 - **Pontos negativos:**
   - O arquivo `Program.cs` está excessivamente poluído com configurações diretas que poderiam ser extraídas para `StartupExtensions` ou classes auxiliares, dificultando a manutenção e leitura.
 
@@ -15,6 +16,7 @@
   - Agregados definidos de forma clara e com encapsulamento das regras de negócio dentro das entidades.
   - Interfaces de repositório por contexto com boa abstração.
 
+✅Corrigido
 - **Pontos negativos:**
   - Foi detectado acoplamento entre contextos no nível de domínio, com um contexto referenciando entidades ou contratos de outro — o que fere o princípio de independência dos Bounded Contexts e deveria ser tratado via eventos de integração.
 
@@ -23,11 +25,13 @@
   - Implementação de fluxos de negócios via comandos e manipuladores (`CommandHandler`), como `CadastrarAluno`, `MatricularAluno`, `AdicionarAula`, etc.
   - Boa organização da camada de aplicação com separação de comandos e queries.
 
+✅Corrigido
 - **Pontos negativos:**
   - Nem todos os fluxos de negócio estão finalizados ponta-a-ponta — alguns ainda estão em construção.
   - Necessário garantir que todas as regras de negócio estejam encapsuladas e bem orquestradas.
 
 ## Integração entre Contextos
+✅Corrigido
 - **Pontos negativos:**
   - Embora os contextos estejam separados logicamente, há **acoplamento técnico entre domínios**, com uso direto de entidades de outros contextos, ao invés de comunicação por **eventos de domínio ou integração assíncrona**.
   - Esse padrão precisa ser substituído por eventos para garantir autonomia e escalabilidade dos contextos.
@@ -38,18 +42,26 @@
   - Uso de `Handlers`, `Repositories` e abstrações por contrato.
   - Padrões de projeto bem aplicados.
 
+✅Corrigido
 - **Pontos negativos:**
   - A persistência dos contextos está bem segmentada, mas a orquestração entre eles requer revisão.
   - A comunicação entre domínios deve ser assíncrona, com uso de eventos, e não via chamadas diretas.
 
 ## Autenticação e Identidade
 
+✅Corrigido
 - **Pontos negativos:**
   - Não há integração de autenticação visível ou validação de perfis (Aluno/Admin), o que é essencial, é criada a entidade usuário durante o registro mas não encontrei como esse usuário será relacionado indiretamente com o aluno.
 
 ## Execução e Testes
 - **Pontos positivos:**
   - Cobertura de testes ampla: testes de unidade, integração e performance distribuídos por pastas.
+
+✅Os dois pontos foram entendidos
+
+Os testes unitários fui empolgando porque não queria somente as entidades básicas e fui para os commands e handles. 
+Esse de performance fake era porque não tinha api ainda e não tinha ambiente dedicado, fiz tudo a partir do teste antes de chegar na api.
+Quando criei a api mudei para MediatR para usar internamente e como tive o problema com a falta deatenção no aulunoContext no pagamento resolvi usar RabbitMQ somente nessa parte para aprender.
 
 - **Pontos negativos:**
   - Os testes de unidade estão testando mais a "integração" de uma maneira "mockada" do que comportamento de fato
@@ -64,7 +76,11 @@
 
 O projeto apresenta uma base muito bem construída, com separação clara de contextos, aplicação das práticas de DDD, modelagem correta das entidades e bom uso de CQRS. Porém, dois pontos importantes precisam de atenção:
 
+✅Corrigido
 1. **Acoplamento entre contextos via referências de domínio**, que deve ser corrigido por **eventos de integração assíncronos**.
+
+✅Corrigido
 2. **Poluição no `Program.cs`** com configurações diretas, que podem ser refatoradas para manter clareza.
+
 
 No mais, é um projeto com alto potencial técnico, que com ajustes pontuais se alinha completamente às diretrizes do desafio.

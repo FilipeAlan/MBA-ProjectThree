@@ -19,7 +19,7 @@ public class ObterAlunoPerformanceTests
         var usuario = new UsuarioContextoFake();
         var handler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
 
-        await handler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"),CancellationToken.None);
+        await handler.Handle(new CadastrarAlunoComando(Guid.NewGuid(), "Filipe", "filipe@email.com"),CancellationToken.None);
         var aluno = contexto.Alunos.First();
 
         var stopwatch = new Stopwatch();

@@ -23,7 +23,7 @@ public class DeletarAlunoPerformanceTests
 
         for (int i = 0; i < 1000; i++)
         {
-            var comando = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
+            var comando = new CadastrarAlunoComando(Guid.NewGuid(), $"Aluno {i}", $"aluno{i}@email.com");
             await cadastrarHandler.Handle(comando, CancellationToken.None);
         }
 

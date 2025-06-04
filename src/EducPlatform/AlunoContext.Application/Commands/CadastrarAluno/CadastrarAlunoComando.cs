@@ -7,10 +7,12 @@ public class CadastrarAlunoComando : IRequest<ResultGeneric<Guid>>
 {
     public string Nome { get; }
     public string Email { get; }
+    public Guid UsuarioId { get; }
 
-    public CadastrarAlunoComando(string nome, string email)
+    public CadastrarAlunoComando(Guid usuarioId, string nome, string email)
     {
         Nome = nome;
         Email = email;
+        UsuarioId = usuarioId;
     }
 }

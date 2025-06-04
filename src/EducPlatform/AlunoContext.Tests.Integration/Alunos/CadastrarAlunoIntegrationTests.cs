@@ -18,7 +18,7 @@ public class CadastrarAlunoIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
         var handler = new CadastrarAlunoHandler(repositorio, usuarioContexto, unitOfWork);
 
-        var comando = new CadastrarAlunoComando("Filipe", "filipe@email.com");
+        var comando = new CadastrarAlunoComando(Guid.NewGuid(), "Filipe", "filipe@email.com");
 
         // Act
         var resultado = await handler.Handle(comando, CancellationToken.None);

@@ -1,6 +1,5 @@
 ﻿using AlunoContext.Domain.Enums;
 using BuildingBlocks.Common;
-using CursoContext.Domain.Entities;
 
 namespace AlunoContext.Domain.Entities;
 

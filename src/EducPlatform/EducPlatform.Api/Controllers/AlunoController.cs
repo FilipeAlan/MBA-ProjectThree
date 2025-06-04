@@ -49,16 +49,6 @@ public class AlunosController : ControllerBase
         return resultado is null ? NotFound() : Ok(resultado);
     }
 
-    [HttpPost("registrar-aluno")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Cadastrar(CadastrarAlunoComando comando)
-    {
-        var resultado = await _mediator.Send(comando);
-        return resultado.Sucesso
-            ? CreatedAtAction(nameof(ObterPorId), new { id = resultado.Dados }, resultado)
-            : BadRequest(resultado);
-    }
-
     [HttpPut("{id}")]
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> Editar(Guid id, EditarAlunoComando comando)

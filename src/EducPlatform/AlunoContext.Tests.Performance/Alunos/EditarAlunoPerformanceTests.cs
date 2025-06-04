@@ -23,7 +23,7 @@ public class EditarAlunoPerformanceTests
 
         for (int i = 0; i < 1000; i++)
         {
-            var comandoCadastro = new CadastrarAlunoComando($"Aluno {i}", $"aluno{i}@email.com");
+            var comandoCadastro = new CadastrarAlunoComando(Guid.NewGuid(), $"Aluno {i}", $"aluno{i}@email.com");
             await cadastrarHandler.Handle(comandoCadastro, CancellationToken.None);
         }
 

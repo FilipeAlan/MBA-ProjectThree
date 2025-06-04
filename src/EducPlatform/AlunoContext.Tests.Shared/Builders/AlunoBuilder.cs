@@ -33,6 +33,6 @@ public class AlunoBuilder
 
     public Aluno Construir()
     {
-        return new Aluno(_nome, _email, _usuario);
+        return new Aluno(Guid.NewGuid(), _nome, _email, _usuario);
     }
 }
