@@ -4,7 +4,7 @@ namespace BuildingBlocks.Common;
 
 public abstract class EntityBase
 {
-    public Guid Id { get; private set; }
+    public Guid Id { get; internal set; }
     public DateTime DataCriacao { get; private set; }
     public DateTime? DataAtualizacao { get; private set; }
     public string UsuarioCriacao { get; private set; }

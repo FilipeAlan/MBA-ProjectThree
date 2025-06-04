@@ -27,7 +27,7 @@ public class CadastrarAlunoHandler : IRequestHandler<CadastrarAlunoComando, Resu
         if (string.IsNullOrWhiteSpace(comando.Email) || !comando.Email.Contains('@'))
             return ResultGeneric<Guid>.Fail("O e-mail informado é inválido.");
 
-        var aluno = new Aluno(comando.Nome, comando.Email, _usuarioContexto.ObterUsuario());
+        var aluno = new Aluno(comando.UsuarioId, comando.Nome, comando.Email, _usuarioContexto.ObterUsuario());
         await _repositorio.Adicionar(aluno);
         await _unitOfWork.Commit();
 

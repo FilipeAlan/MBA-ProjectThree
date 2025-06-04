@@ -5,6 +5,7 @@ namespace AlunoContext.Domain.Aggregates;
 
 public class Aluno : EntityBase
 {
+    public Guid UsuarioId { get; private set; }
     public string Nome { get; private set; }
     public string Email { get; private set; }
     private readonly List<Matricula> _matriculas = new();
@@ -14,11 +15,12 @@ public class Aluno : EntityBase
     protected Aluno() : base("SYSTEM") // Para EF Core
     {
     }
-    public Aluno(string nome, string email, string usuarioCriacao)
+    public Aluno(Guid usuarioId, string nome, string email, string usuarioCriacao)
         : base(usuarioCriacao)
     {
         Nome = nome;
         Email = email;
+        UsuarioId = usuarioId;
     }
     public void AdicionarMatricula(Matricula matricula)
     {

@@ -1,10 +1,13 @@
 ﻿namespace EducPlatform.Api.Controllers;
 
+using AlunoContext.Application.Commands.CadastrarAluno;
 using BuildingBlocks.Security;
 using EducPlatform.Api.Dtos;
 using EducPlatform.Api.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -13,12 +16,14 @@ public class ContaController : ControllerBase
     private readonly UserManager<Usuario> _userManager;
     private readonly SignInManager<Usuario> _signInManager;
     private readonly IConfiguration _configuration;
+    private readonly IMediator _mediator;
 
-    public ContaController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, IConfiguration configuration)
+    public ContaController(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, IConfiguration configuration, IMediator mediator)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
+        _mediator = mediator;
     }
 
     [HttpPost("registrar")]
@@ -35,10 +40,31 @@ public class ContaController : ControllerBase
         };
 
         var resultado = await _userManager.CreateAsync(usuario, request.Senha);
-        if (!resultado.Succeeded) return BadRequest(resultado.Errors);
+        if (!resultado.Succeeded)
+            return BadRequest(resultado.Errors);
 
-        return Ok(new { message = "Usuário registrado com sucesso!" });
+        var role = request.Tipo?.ToLower() == "admin" ? "admin" : "aluno";
+
+        if (!await _userManager.IsInRoleAsync(usuario, role))
+            await _userManager.AddToRoleAsync(usuario, role);
+
+        // Se for aluno, criar também a entidade Aluno
+        if (role == "aluno")
+        {
+            var comando = new CadastrarAlunoComando(
+                usuario.Id,
+                usuario.NomeCompleto,
+                usuario.Email!
+            );
+
+            var resultadoAluno = await _mediator.Send(comando);
+            if (!resultadoAluno.Sucesso)
+                return BadRequest(resultadoAluno.Mensagem);
+        }
+
+        return Ok($"Usuário ({role}) criado com sucesso.");
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginUsuarioRequest request)

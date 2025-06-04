@@ -19,8 +19,8 @@ public class ListarAlunosIntegrationTests
         var unitOfWork = new UnitOfWork(contexto);
 
         var cadastrarHandler = new CadastrarAlunoHandler(repositorio, usuario, unitOfWork);
-        await cadastrarHandler.Handle(new CadastrarAlunoComando("Filipe", "filipe@email.com"), CancellationToken.None);
-        await cadastrarHandler.Handle(new CadastrarAlunoComando("João", "joao@email.com"),CancellationToken.None);
+        await cadastrarHandler.Handle(new CadastrarAlunoComando(Guid.NewGuid(), "Filipe", "filipe@email.com"), CancellationToken.None);
+        await cadastrarHandler.Handle(new CadastrarAlunoComando(Guid.NewGuid(), "João", "joao@email.com"),CancellationToken.None);
 
         var listarHandler = new ListarAlunosHandler(repositorio);
 
