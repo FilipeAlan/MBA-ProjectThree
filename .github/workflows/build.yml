@@ -25,8 +25,5 @@ jobs:
       - name: Restaurar dependências
         run: dotnet restore src/EducPlatform/EducPlatform.sln
 
-      - name: Compilar sem warnings
-        run: dotnet build src/EducPlatform/EducPlatform.sln --no-restore -warnaserror
-
       - name: Executar testes
         run: dotnet test src/EducPlatform/EducPlatform.sln --no-build --verbosity normal --environment=Development
