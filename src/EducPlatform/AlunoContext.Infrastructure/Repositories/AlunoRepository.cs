@@ -41,10 +41,11 @@ public class AlunoRepository : IAlunoRepository
 
     public async Task<List<Aluno>> Listar()
     {
-        return await _context.Alunos
+        var alunos = await _context.Alunos
             .Include(a => a.Matriculas)
             .Include(a => a.Certificados)
             .ToListAsync();
+        return alunos;
     }
     public async Task<Aluno?> ObterAlunoPorMatriculaId(Guid matriculaId)
     {

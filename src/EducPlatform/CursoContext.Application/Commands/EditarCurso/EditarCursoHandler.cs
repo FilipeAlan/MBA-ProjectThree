@@ -2,6 +2,7 @@
 using BuildingBlocks.Results;
 using CursoContext.Domain.Repositories;
 using CursoContext.Domain.ValueObjects;
+using CursoContext.Infrastructure.Context;
 using MediatR;
 
 namespace CursoContext.Application.Commands.EditarCurso;
@@ -10,9 +11,9 @@ public class EditarCursoHandler : IRequestHandler<EditarCursoComando, Result>
 {
     private readonly ICursoRepository _cursoRepository;
     private readonly IUsuarioContexto _usuarioContexto;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICursoUnityOfWork _unitOfWork;
 
-    public EditarCursoHandler(ICursoRepository cursoRepository, IUsuarioContexto usuarioContexto, IUnitOfWork unitOfWork)
+    public EditarCursoHandler(ICursoRepository cursoRepository, IUsuarioContexto usuarioContexto, ICursoUnityOfWork unitOfWork)
     {
         _cursoRepository = cursoRepository;
         _usuarioContexto = usuarioContexto;

@@ -1,5 +1,8 @@
-﻿namespace CursoContext.Application.Queries.ListarCurso;
+﻿using CursoContext.Application.Dto;
+using MediatR;
 
-public class ListarCursosQuery
+namespace CursoContext.Application.Queries.ListarCurso;
+
+public class ListarCursosQuery : IRequest<List<CursoDto>>
 {
 }

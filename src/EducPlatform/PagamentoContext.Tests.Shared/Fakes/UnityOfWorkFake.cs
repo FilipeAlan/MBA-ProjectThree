@@ -1,8 +1,8 @@
-﻿using BuildingBlocks.Common;
+﻿using PagamentoContext.Infrastructure.Context;
 
 namespace PagamentoContext.Tests.Shared.Fakes;
 
-public class UnitOfWorkFake : IUnitOfWork
+public class UnitOfWorkFake : IPagamentoUnityOfWork
 {
     public Task Commit()
     {

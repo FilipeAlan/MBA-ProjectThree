@@ -35,17 +35,5 @@ public abstract class EntityBase
     public override int GetHashCode()
     {
         return Id.GetHashCode();
-    }
-
-    public static bool operator ==(EntityBase a, EntityBase b)
-    {
-        if (ReferenceEquals(a, b)) return true;
-        if (a is null || b is null) return false;
-        return a.Id == b.Id;
-    }
-
-    public static bool operator !=(EntityBase a, EntityBase b)
-    {
-        return !(a == b);
-    }
+    }    
 }

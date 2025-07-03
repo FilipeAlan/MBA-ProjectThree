@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CursoContext.Domain\CursoContext.Domain.csproj" />
+    <ProjectReference Include="..\CursoContext.Infraestructure\CursoContext.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

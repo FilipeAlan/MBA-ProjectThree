@@ -1,6 +1,9 @@
-﻿using EducPlatform.Api.Identity;
+﻿using AlunoContext.Infrastructure.Context;
+using CursoContext.Infrastructure.Context;
+using EducPlatform.Api.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PagamentoContext.Infrastructure.Context;
 
 namespace EducPlatform.Api.Extensions
 {
@@ -9,22 +12,26 @@ namespace EducPlatform.Api.Extensions
         public static async Task InitializeDatabaseAsync(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
-            await context.Database.MigrateAsync();
 
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Usuario>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            // Aplica migrations do Identity
+            var identityContext = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+            await identityContext.Database.MigrateAsync();
 
-            var email = "admin@admin.com";
-            var user = await userManager.FindByEmailAsync(email);
+            // Aplica migrations do contexto do Aluno
+            var alunoContext = scope.ServiceProvider.GetRequiredService<AlunoDbContext>();
+            await alunoContext.Database.MigrateAsync();
 
-            if (user != null && !await userManager.IsInRoleAsync(user, "admin"))
-            {
-                if (!await roleManager.RoleExistsAsync("admin"))
-                    await roleManager.CreateAsync(new IdentityRole<Guid>("admin"));
+            // Aplica migrations do contexto do Aluno
+            var cursoContext = scope.ServiceProvider.GetRequiredService<CursoDbContext>();
+            await cursoContext.Database.MigrateAsync();
 
-                await userManager.AddToRoleAsync(user, "admin");
-            }
+            // Aplica migrations do contexto do Aluno
+            var pagamentoContext = scope.ServiceProvider.GetRequiredService<PagamentoDbContext>();
+            await pagamentoContext.Database.MigrateAsync();
+
+            // Cria usuário admin e associa à role ADMIN se necessário
+            await IdentitySeeder.SeedAsync(scope.ServiceProvider);
         }
     }
+
 }

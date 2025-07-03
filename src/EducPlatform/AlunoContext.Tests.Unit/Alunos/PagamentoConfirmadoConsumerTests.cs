@@ -5,13 +5,16 @@ using AlunoContext.Domain.Enums;
 using AlunoContext.Domain.Repositories;
 using BuildingBlocks.Common;
 using BuildingBlocks.Events;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
+using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
 namespace AlunoContext.Tests.Unit.Alunos;
+
 public class PagamentoConfirmadoConsumerTests
 {
     [Fact(DisplayName = "Deve processar mensagem de pagamento confirmado e ativar matrícula")]
@@ -42,15 +45,21 @@ public class PagamentoConfirmadoConsumerTests
 
         var loggerMock = new Mock<ILogger<PagamentoConfirmadoConsumer>>();
 
-        // Act
-        var consumer = new PagamentoConfirmadoConsumer(scopeFactoryMock.Object, loggerMock.Object);
+        var connectionFactory = new ConnectionFactory(); // Dummy para o teste
+        var configMock = new Mock<IConfiguration>();
+        configMock.Setup(c => c.GetSection("RabbitMQ")["Queue"]).Returns("fila-teste");
 
-        // Emular chamada interna do evento recebido (privado, um workaround)
+        var consumer = new PagamentoConfirmadoConsumer(
+            scopeFactoryMock.Object,
+            loggerMock.Object,
+            connectionFactory,
+            configMock.Object);
+
         var eventPayload = new PagamentoConfirmadoEvent(matriculaId);
         var json = JsonSerializer.Serialize(eventPayload);
         var body = Encoding.UTF8.GetBytes(json);
 
-        // Emular chamada direta (foco no processamento, não em RabbitMQ em si)
+        // Emular o processamento direto (via método exposto no teste)
         await consumer.TestarProcessamentoDireto(body);
 
         // Assert

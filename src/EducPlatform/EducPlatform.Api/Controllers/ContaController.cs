@@ -78,7 +78,10 @@ public class ContaController : ControllerBase
         if (!resultado.Succeeded) return Unauthorized("Usuário ou senha inválidos.");
 
         var chaveJwt = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key não configurada.");
-        var token = JwtTokenGenerator.GenerateToken(usuario.Id.ToString(), usuario.Email!, chaveJwt);
+
+        var roles = (await _userManager.GetRolesAsync(usuario)).ToList();
+
+        var token = JwtTokenGenerator.GenerateToken(usuario.Id.ToString(), usuario.Email!, roles, chaveJwt);
 
         return Ok(new LoginResponse
         {

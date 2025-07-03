@@ -41,7 +41,7 @@ public class RealizarPagamentoTests
         };
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso); // Pagamento é processado com sucesso
@@ -63,7 +63,7 @@ public class RealizarPagamentoTests
         };
 
         // Act
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);

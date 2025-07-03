@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.csproj" />
+    <ProjectReference Include="..\PagamentoContext.Infrastructure\PagamentoContext.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

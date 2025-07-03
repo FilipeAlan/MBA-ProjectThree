@@ -25,10 +25,10 @@ public class ListarCursosTests
         await _repositorio.Adicionar(curso2);
 
         // Act
-        var resultado = await _handler.Handle(new ListarCursosQuery());
+        var resultado = await _handler.Handle(new ListarCursosQuery(),CancellationToken.None);
 
         // Assert
-        Assert.Equal(2, resultado.Count);
+        Assert.Equal(2, resultado.Count());
         Assert.Contains(resultado, c => c.Nome == "Curso 1");
         Assert.Contains(resultado, c => c.Nome == "Curso 2");
     }

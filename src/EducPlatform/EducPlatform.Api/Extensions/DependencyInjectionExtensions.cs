@@ -1,4 +1,5 @@
-﻿using EducPlatform.Api.Identity;
+﻿using BuildingBlocks.Common;
+using EducPlatform.Api.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace EducPlatform.Api.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+            // Identity
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlite(connectionString));
 
@@ -25,7 +27,12 @@ namespace EducPlatform.Api.Extensions
                 options.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<IdentityDbContext>()
-            .AddDefaultTokenProviders();
+            .AddDefaultTokenProviders();            
+            
+            // Building Blocks
+            services.AddScoped<IUsuarioContexto, UsuarioContexto>();
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             return services;
         }

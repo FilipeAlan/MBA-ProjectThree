@@ -23,7 +23,7 @@ public class ObterCursoTests
         await _repositorio.Adicionar(curso);
 
         // Act
-        var resultado = await _handler.Handle(new ObterCursoPorIdQuery(curso.Id));
+        var resultado = await _handler.Handle(new ObterCursoPorIdQuery(curso.Id), CancellationToken.None);
 
         // Assert
         Assert.NotNull(resultado);
@@ -36,7 +36,7 @@ public class ObterCursoTests
     public async Task DeveRetornarNulo_QuandoIdNaoExistir()
     {
         // Act
-        var resultado = await _handler.Handle(new ObterCursoPorIdQuery(Guid.NewGuid()));
+        var resultado = await _handler.Handle(new ObterCursoPorIdQuery(Guid.NewGuid()),CancellationToken.None);
 
         // Assert
         Assert.Null(resultado);

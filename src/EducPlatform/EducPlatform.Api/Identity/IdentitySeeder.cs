@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace EducPlatform.Api.Identity
 {
@@ -13,11 +12,18 @@ namespace EducPlatform.Api.Identity
             const string adminEmail = "admin@admin.com";
             const string adminPassword = "Admin@123";
             const string adminRole = "admin";
+            const string alunoRole = "aluno"; 
 
-            // Cria a role se não existir
+            // Cria a role ADMIN se não existir
             if (!await roleManager.RoleExistsAsync(adminRole))
             {
                 await roleManager.CreateAsync(new IdentityRole<Guid>(adminRole));
+            }
+
+            // Cria a role ALUNO se não existir
+            if (!await roleManager.RoleExistsAsync(alunoRole))
+            {
+                await roleManager.CreateAsync(new IdentityRole<Guid>(alunoRole));
             }
 
             // Cria o usuário admin se não existir

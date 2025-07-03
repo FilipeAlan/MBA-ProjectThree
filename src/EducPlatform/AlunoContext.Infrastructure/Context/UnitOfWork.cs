@@ -1,8 +1,6 @@
-﻿using BuildingBlocks.Common;
+﻿namespace AlunoContext.Infrastructure.Context;
 
-namespace AlunoContext.Infrastructure.Context;
-
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IAlunoUnitOfWork
 {
     private readonly AlunoDbContext _context;
 

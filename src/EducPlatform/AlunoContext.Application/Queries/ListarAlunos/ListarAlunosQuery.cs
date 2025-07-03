@@ -1,3 +1,6 @@
-﻿namespace AlunoContext.Application.Queries.ListarAlunos;
+﻿using AlunoContext.Application.Dto;
+using MediatR;
 
-public class ListarAlunosQuery { }
+namespace AlunoContext.Application.Queries.ListarAlunos;
+
+public class ListarAlunosQuery : IRequest<List<AlunoDto>> { }

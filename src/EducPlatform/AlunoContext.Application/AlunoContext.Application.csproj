@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AlunoContext.Domain\AlunoContext.Domain.csproj" />
+    <ProjectReference Include="..\AlunoContext.Infrastructure\AlunoContext.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
