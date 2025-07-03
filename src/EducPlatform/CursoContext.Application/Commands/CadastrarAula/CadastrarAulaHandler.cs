@@ -3,6 +3,7 @@ using CursoContext.Domain.Repositories;
 using BuildingBlocks.Common;
 using BuildingBlocks.Results;
 using MediatR;
+using CursoContext.Infrastructure.Context;
 
 namespace CursoContext.Application.Commands.CadastrarAula;
 
@@ -10,9 +11,9 @@ public class CadastrarAulaHandler : IRequestHandler<CadastrarAulaComando, Result
 {
     private readonly ICursoRepository _cursoRepository;
     private readonly IUsuarioContexto _usuarioContexto;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICursoUnityOfWork _unitOfWork;
 
-    public CadastrarAulaHandler(ICursoRepository cursoRepository, IUsuarioContexto usuarioContexto, IUnitOfWork unitOfWork)
+    public CadastrarAulaHandler(ICursoRepository cursoRepository, IUsuarioContexto usuarioContexto, ICursoUnityOfWork unitOfWork)
     {
         _cursoRepository = cursoRepository;
         _usuarioContexto = usuarioContexto;

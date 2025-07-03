@@ -1,8 +1,6 @@
-﻿using BuildingBlocks.Common;
-
-namespace CursoContext.Infrastructure.Context
+﻿namespace CursoContext.Infrastructure.Context
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : ICursoUnityOfWork
     {
         private readonly CursoDbContext _context;
 

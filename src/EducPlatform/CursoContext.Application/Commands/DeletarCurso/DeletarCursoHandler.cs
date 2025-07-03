@@ -1,6 +1,7 @@
-﻿using CursoContext.Domain.Repositories;
-using BuildingBlocks.Common;
+﻿using BuildingBlocks.Common;
 using BuildingBlocks.Results;
+using CursoContext.Domain.Repositories;
+using CursoContext.Infrastructure.Context;
 using MediatR;
 
 namespace CursoContext.Application.Commands.DeletarCurso;
@@ -8,9 +9,9 @@ namespace CursoContext.Application.Commands.DeletarCurso;
 public class DeletarCursoHandler : IRequestHandler<DeletarCursoComando, Result>
 {
     private readonly ICursoRepository _cursoRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICursoUnityOfWork _unitOfWork;
 
-    public DeletarCursoHandler(ICursoRepository cursoRepository, IUnitOfWork unitOfWork)
+    public DeletarCursoHandler(ICursoRepository cursoRepository, ICursoUnityOfWork unitOfWork)
     {
         _cursoRepository = cursoRepository;
         _unitOfWork = unitOfWork;

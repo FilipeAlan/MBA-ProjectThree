@@ -1,4 +1,5 @@
-﻿using AlunoContext.Domain.Enums;
+﻿using AlunoContext.Domain.Aggregates;
+using AlunoContext.Domain.Enums;
 using BuildingBlocks.Common;
 
 namespace AlunoContext.Domain.Entities;
@@ -8,6 +9,8 @@ public class Matricula : EntityBase
     public Guid CursoId { get; private set; }
     public DateTime DataMatricula { get; private set; }
     public StatusMatricula Status { get; private set; }
+    public Guid AlunoId { get; set; }
+    public Aluno Aluno { get; set; }
 
     protected Matricula() : base("SYSTEM") { }
 

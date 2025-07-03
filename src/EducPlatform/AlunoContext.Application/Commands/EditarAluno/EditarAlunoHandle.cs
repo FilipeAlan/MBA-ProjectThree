@@ -1,4 +1,5 @@
 ﻿using AlunoContext.Domain.Repositories;
+using AlunoContext.Infrastructure.Context;
 using BuildingBlocks.Common;
 using BuildingBlocks.Results;
 using MediatR;
@@ -9,9 +10,9 @@ public class EditarAlunoHandler : IRequestHandler<EditarAlunoComando, Result>
 {
     private readonly IAlunoRepository _repositorio;
     private readonly IUsuarioContexto _usuarioContexto;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IAlunoUnitOfWork _unitOfWork;
 
-    public EditarAlunoHandler(IAlunoRepository repositorio, IUsuarioContexto usuarioContexto, IUnitOfWork unitOfWork)
+    public EditarAlunoHandler(IAlunoRepository repositorio, IUsuarioContexto usuarioContexto, IAlunoUnitOfWork unitOfWork)
     {
         _repositorio = repositorio;
         _usuarioContexto = usuarioContexto;

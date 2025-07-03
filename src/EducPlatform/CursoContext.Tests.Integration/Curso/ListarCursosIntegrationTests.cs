@@ -25,7 +25,7 @@ public class ListarCursosIntegrationTests
         var listarHandler = new ListarCursosHandler(repositorio);
 
         // Act
-        var cursos = await listarHandler.Handle(new ListarCursosQuery());
+        var cursos = await listarHandler.Handle(new ListarCursosQuery(),CancellationToken.None);
 
         // Assert
         Assert.Equal(2, cursos.Count);

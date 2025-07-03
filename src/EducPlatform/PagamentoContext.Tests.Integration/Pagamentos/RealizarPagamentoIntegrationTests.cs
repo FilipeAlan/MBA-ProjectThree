@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Common;
-using BuildingBlocks.Events;
+﻿using BuildingBlocks.Events;
 using BuildingBlocks.Messagings;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -17,7 +16,7 @@ public class RealizarPagamentoIntegrationTests : IAsyncLifetime
     private PagamentoDbContext _pagamentoContext = null!;  
     private RealizarPagamentoHandler _handler = null!;
     private IPagamentoRepository _pagamentoRepository = null!;  
-    private IUnitOfWork _unitOfWork = null!;
+    private IPagamentoUnityOfWork _unitOfWork = null!;
     
     public Task InitializeAsync()
     {
@@ -47,7 +46,7 @@ public class RealizarPagamentoIntegrationTests : IAsyncLifetime
             CVV = "123"
         };
 
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando,CancellationToken.None);
 
         Assert.True(resultado.Sucesso);
 
@@ -68,7 +67,7 @@ public class RealizarPagamentoIntegrationTests : IAsyncLifetime
             Validade = "11/30",
             CVV = "321"
         };
-        var resultado = await _handler.Handle(comando);
+        var resultado = await _handler.Handle(comando, CancellationToken.None);
 
         Assert.True(resultado.Sucesso);
 

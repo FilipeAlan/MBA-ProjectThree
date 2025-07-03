@@ -1,38 +1,47 @@
 ﻿using AlunoContext.Domain.Entities;
 using AlunoContext.Domain.Repositories;
-using BuildingBlocks.Results;
-using AlunoContext.Application.Common;
+using AlunoContext.Infrastructure.Context;
 using BuildingBlocks.Common;
+using BuildingBlocks.Events;
+using BuildingBlocks.Messagings;
+using BuildingBlocks.Results;
+using MediatR;
 
 namespace AlunoContext.Application.Commands.MatricularAluno;
 
-public class MatricularAlunoHandler
+public class MatricularAlunoHandler : IRequestHandler<MatricularAlunoComando, Result>
 {
     private readonly IAlunoRepository _alunoRepository;
     private readonly IUsuarioContexto _usuarioContexto;
-    private readonly ICursoConsulta _cursoConsulta;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMensagemBus _mensagemBus;
+    private readonly IAlunoUnitOfWork _unitOfWork;
 
     public MatricularAlunoHandler(
         IAlunoRepository alunoRepository,
         IUsuarioContexto usuarioContexto,
-        ICursoConsulta cursoConsulta,
-        IUnitOfWork unitOfWork)
+        IMensagemBus mensagemBus,
+        IAlunoUnitOfWork unitOfWork)
     {
         _alunoRepository = alunoRepository;
         _usuarioContexto = usuarioContexto;
-        _cursoConsulta = cursoConsulta;
+        _mensagemBus = mensagemBus;
         _unitOfWork = unitOfWork;
     }
 
-
-    public async Task<Result> Handle(MatricularAlunoComando comando)
+    public async Task<Result> Handle(MatricularAlunoComando comando, CancellationToken cancellationToken)
     {
         var aluno = await _alunoRepository.ObterPorId(comando.AlunoId);
         if (aluno is null)
             return Result.Fail("Aluno não encontrado.");
 
-        if (!_cursoConsulta.Existe(comando.CursoId))
+        // Envia mensagem de verificação para o contexto de Curso
+        var requestEvent = new VerificarCursoRequestEvent(comando.CursoId);
+        var response = await _mensagemBus.RequestAsync<VerificarCursoRequestEvent, VerificarCursoResponseEvent>(
+            requestEvent,
+            "verificar-curso-request",
+            cancellationToken);
+
+        if (response == null || !response.Existe)
             return Result.Fail("Curso não encontrado.");
 
         var jaMatriculado = aluno.Matriculas.Any(m => m.CursoId == comando.CursoId);

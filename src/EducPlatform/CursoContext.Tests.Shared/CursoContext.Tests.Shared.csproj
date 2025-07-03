@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.csproj" />
     <ProjectReference Include="..\CursoContext.Domain\CursoContext.Domain.csproj" />
+    <ProjectReference Include="..\CursoContext.Infraestructure\CursoContext.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,20 +1,22 @@
 ﻿using AlunoContext.Application.Dto;
 using AlunoContext.Domain.Repositories;
+using MediatR;
 
-namespace AlunoContext.Application.Queries.ListarAlunos;
-
-public class ListarAlunosHandler
+namespace AlunoContext.Application.Queries.ListarAlunos
 {
-    private readonly IAlunoRepository _repositorio;
-
-    public ListarAlunosHandler(IAlunoRepository repositorio)
+    public class ListarAlunosHandler : IRequestHandler<ListarAlunosQuery, List<AlunoDto>>
     {
-        _repositorio = repositorio;
-    }
+        private readonly IAlunoRepository _repositorio;
 
-    public async Task<List<AlunoDto>> Handle(ListarAlunosQuery query)
-    {
-        var alunos = await _repositorio.Listar();
-        return alunos.Select(aluno => new AlunoDto(aluno.Id, aluno.Nome, aluno.Email)).ToList();
+        public ListarAlunosHandler(IAlunoRepository repositorio)
+        {
+            _repositorio = repositorio;
+        }
+
+        public async Task<List<AlunoDto>> Handle(ListarAlunosQuery query, CancellationToken cancellationToken)
+        {
+            var alunos = await _repositorio.Listar();
+            return alunos.Select(aluno => new AlunoDto(aluno.Id, aluno.Nome, aluno.Email)).ToList();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AlunoContext.Domain.Repositories;
+using AlunoContext.Infrastructure.Context;
 using BuildingBlocks.Common;
 using BuildingBlocks.Results;
 
@@ -7,9 +8,9 @@ namespace AlunoContext.Application.Commands.DeletarAluno;
 public class DeletarAlunoHandler
 {
     private readonly IAlunoRepository _repositorio;    
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IAlunoUnitOfWork _unitOfWork;
 
-    public DeletarAlunoHandler(IAlunoRepository repositorio, IUnitOfWork unitOfWork)
+    public DeletarAlunoHandler(IAlunoRepository repositorio, IAlunoUnitOfWork unitOfWork)
     {
         _repositorio = repositorio;        
         _unitOfWork = unitOfWork;

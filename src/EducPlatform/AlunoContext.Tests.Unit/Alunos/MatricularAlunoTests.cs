@@ -11,12 +11,15 @@ public class MatricularAlunoTests
     private readonly AlunoRepositorioFake _repositorioFake;
     private readonly UsuarioContextoFake _usuarioFake;
     private readonly UnitOfWorkFake _unitOfWorkFake;
+    private readonly MensagemBusFake _mensagemBusFake;
 
     public MatricularAlunoTests()
     {
         _repositorioFake = new AlunoRepositorioFake();
         _usuarioFake = new UsuarioContextoFake();
         _unitOfWorkFake = new UnitOfWorkFake();
+        _mensagemBusFake = new MensagemBusFake();
+
     }
 
     [Fact(DisplayName = "Deve matricular aluno quando dados forem válidos")]
@@ -26,10 +29,10 @@ public class MatricularAlunoTests
         var aluno = AlunoBuilder.Novo().Construir();
         await _repositorioFake.Adicionar(aluno);
         var comando = new MatricularAlunoComando(aluno.Id, Guid.NewGuid());
-        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, new CursoConsultaFake(true), _unitOfWorkFake);
+        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, _mensagemBusFake, _unitOfWorkFake);
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.True(resultado.Sucesso);
@@ -39,12 +42,13 @@ public class MatricularAlunoTests
     [Fact(DisplayName = "Não deve matricular aluno inexistente")]
     public async Task NaoDeveMatricular_AlunoInexistente()
     {
+        
         // Arrange
         var comando = new MatricularAlunoComando(Guid.NewGuid(), Guid.NewGuid());
-        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, new CursoConsultaFake(true), _unitOfWorkFake);
+        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake,_mensagemBusFake, _unitOfWorkFake);
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);
@@ -57,11 +61,14 @@ public class MatricularAlunoTests
         // Arrange
         var aluno = AlunoBuilder.Novo().Construir();
         await _repositorioFake.Adicionar(aluno);
+
+        _mensagemBusFake.cursoExistente = false;
+
         var comando = new MatricularAlunoComando(aluno.Id, Guid.NewGuid());
-        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, new CursoConsultaFake(false), _unitOfWorkFake);
+        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, _mensagemBusFake, _unitOfWorkFake);
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);
@@ -77,10 +84,10 @@ public class MatricularAlunoTests
         aluno.AdicionarMatricula(new Matricula(cursoId, "TDD"));
         await _repositorioFake.Adicionar(aluno);
         var comando = new MatricularAlunoComando(aluno.Id, cursoId);
-        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, new CursoConsultaFake(true), _unitOfWorkFake);
+        var handler = new MatricularAlunoHandler(_repositorioFake, _usuarioFake, _mensagemBusFake, _unitOfWorkFake);
 
         // Act
-        var resultado = await handler.Handle(comando);
+        var resultado = await handler.Handle(comando, CancellationToken.None);
 
         // Assert
         Assert.False(resultado.Sucesso);

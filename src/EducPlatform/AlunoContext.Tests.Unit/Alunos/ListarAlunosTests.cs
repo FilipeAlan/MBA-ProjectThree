@@ -23,7 +23,7 @@ public class ListarAlunosTests
         await _repositorioFake.Adicionar(aluno2);
 
         var handler = new ListarAlunosHandler(_repositorioFake);
-        var resultado = await handler.Handle(new ListarAlunosQuery());
+        var resultado = await handler.Handle(new ListarAlunosQuery(), CancellationToken.None);
 
         Assert.Equal(2, resultado.Count);
         Assert.Contains(resultado, x => x.Nome == "Filipe");
@@ -35,7 +35,7 @@ public class ListarAlunosTests
     {
         var handler = new ListarAlunosHandler(_repositorioFake);
 
-        var resultado = await handler.Handle(new ListarAlunosQuery());
+        var resultado = await handler.Handle(new ListarAlunosQuery(), CancellationToken.None);
 
         Assert.NotNull(resultado); // deve retornar lista, não null
         Assert.Empty(resultado);   // deve estar vazia

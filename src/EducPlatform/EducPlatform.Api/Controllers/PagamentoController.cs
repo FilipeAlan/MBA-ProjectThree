@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BuildingBlocks.Results;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using PagamentoContext.Applicarion.Commands;
-using BuildingBlocks.Results;
 
 namespace PagamentoContext.API.Controllers;
 
@@ -8,17 +9,17 @@ namespace PagamentoContext.API.Controllers;
 [Route("api/[controller]")]
 public class PagamentoController : ControllerBase
 {
-    private readonly RealizarPagamentoHandler _realizarPagamentoHandler;
+    private readonly IMediator _mediator;
 
-    public PagamentoController(RealizarPagamentoHandler realizarPagamentoHandler)
+    public PagamentoController(IMediator mediator)
     {
-        _realizarPagamentoHandler = realizarPagamentoHandler;
+        _mediator = mediator;
     }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] RealizarPagamentoComando comando)
     {
-        Result resultado = await _realizarPagamentoHandler.Handle(comando);
+        Result resultado = await _mediator.Send(comando);
 
         if (resultado.Sucesso)
             return Ok(new { mensagem = resultado.Mensagem });
@@ -26,3 +27,4 @@ public class PagamentoController : ControllerBase
         return BadRequest(new { erro = resultado.Mensagem });
     }
 }
+

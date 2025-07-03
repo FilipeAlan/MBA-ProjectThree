@@ -1,6 +1,9 @@
-﻿namespace CursoContext.Application.Queries.ObterCurso;
+﻿using CursoContext.Application.Dto;
+using MediatR;
 
-public class ObterCursoPorIdQuery
+namespace CursoContext.Application.Queries.ObterCurso;
+
+public class ObterCursoPorIdQuery : IRequest<CursoDto?>
 {
     public Guid Id { get; }
 

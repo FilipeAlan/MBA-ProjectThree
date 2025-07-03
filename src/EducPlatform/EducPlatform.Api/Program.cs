@@ -1,4 +1,3 @@
-using AlunoContext.Application.Consumers;
 using EducPlatform.Api.Extensions;
 
 
@@ -12,7 +11,17 @@ builder.Services.AddControllers();
 builder.Services.AddCors();
 
 // Registra o serviço que escuta a fila RabbitMQ
-// builder.Services.AddHostedService<PagamentoConfirmadoConsumer>();
+builder.Services.AddRabbitMQInjection(builder.Configuration);
+
+// Registra MediatR
+builder.Services.AddAlunoContext(builder.Configuration);
+builder.Services.AddCursoContext(builder.Configuration);
+builder.Services.AddPagamentoContext(builder.Configuration);
+
+//Jeito alternativo de registrar os handlers
+  //builder.Services.AddMediatR(cfg =>
+  //  cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
 
 var app = builder.Build();
 

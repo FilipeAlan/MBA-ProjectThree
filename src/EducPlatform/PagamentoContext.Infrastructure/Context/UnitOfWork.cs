@@ -2,7 +2,7 @@
 
 namespace PagamentoContext.Infrastructure.Context
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IPagamentoUnityOfWork
     {
         private readonly PagamentoDbContext _context;
 
