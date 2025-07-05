@@ -9,5 +9,8 @@
         CancellationToken cancellationToken)
         where TRequest : class
         where TResponse : class;
+        void ResponderAsync<TRequest, TResponse>(string fila, Func<TRequest, Task<TResponse>> callback)
+        where TRequest : class
+        where TResponse : class;
     }
 }

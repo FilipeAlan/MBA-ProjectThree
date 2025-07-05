@@ -1,6 +1,5 @@
-﻿using BuildingBlocks.Messagings;
-using BuildingBlocks.Events;
-using System.Threading;
+﻿using BuildingBlocks.Events;
+using BuildingBlocks.Messagings;
 
 namespace AlunoContext.Tests.Shared.Fakes;
 
@@ -25,5 +24,12 @@ public class MensagemBusFake : IMensagemBus
         }
 
         return Task.FromResult<TResponse>(null!);
+    }
+
+    public void ResponderAsync<TRequest, TResponse>(string fila, Func<TRequest, Task<TResponse>> callback)
+        where TRequest : class
+        where TResponse : class
+    {
+        throw new NotImplementedException();//Para tenste não precisa implementação
     }
 }
